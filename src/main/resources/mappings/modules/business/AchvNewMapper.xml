@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.AchvNewMapper" >
+  <resultMap id="BaseResultMap" type="cn.fundview.modules.model.AchvNew" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="trade_ids" property="tradeIds" jdbcType="VARCHAR" />
+    <result column="trade_names" property="tradeNames" jdbcType="VARCHAR" />
+    <result column="gyi_hjie" property="gyiHjie" jdbcType="VARCHAR" />
+    <result column="other_gyi_hjie" property="otherGyiHjie" jdbcType="VARCHAR" />
+    <result column="tech_jd" property="techJd" jdbcType="INTEGER" />
+    <result column="zl_status" property="zlStatus" jdbcType="INTEGER" />
+    <result column="zl_no" property="zlNo" jdbcType="VARCHAR" />
+    <result column="zl_url" property="zlUrl" jdbcType="VARCHAR" />
+    <result column="dept" property="dept" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="zr_way" property="zrWay" jdbcType="VARCHAR" />
+    <result column="ptxk_price" property="ptxkPrice" jdbcType="DOUBLE" />
+    <result column="zr_price" property="zrPrice" jdbcType="DOUBLE" />
+    <result column="publisher_id" property="publisherId" jdbcType="INTEGER" />
+    <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="recommend" property="recommend" jdbcType="TINYINT" />
+    <result column="hot" property="hot" jdbcType="TINYINT" />
+    <result column="latest" property="latest" jdbcType="TINYINT" />
+    <result column="recommend_num" property="recommendNum" jdbcType="INTEGER" />
+    <result column="hot_num" property="hotNum" jdbcType="INTEGER" />
+    <result column="latest_num" property="latestNum" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="no" property="no" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="TINYINT" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_publish" property="isPublish" jdbcType="TINYINT" />
+    <result column="is_delete" property="isDelete" jdbcType="TINYINT" />
+    <result column="ck_price" property="ckPrice" jdbcType="DOUBLE" />
+    <result column="apply_comp_name" property="applyCompName" jdbcType="VARCHAR" />
+    <result column="is_apply" property="isApply" jdbcType="TINYINT" />
+    <result column="is_jd" property="isJd" jdbcType="TINYINT" />
+    <result column="jd_url" property="jdUrl" jdbcType="VARCHAR" />
+    <result column="materi_ids" property="materiIds" jdbcType="VARCHAR" />
+    <result column="materi_names" property="materiNames" jdbcType="VARCHAR" />
+    <result column="prod_type_ids" property="prodTypeIds" jdbcType="VARCHAR" />
+    <result column="prod_type_names" property="prodTypeNames" jdbcType="VARCHAR" />
+    <result column="major_problem_key" property="majorProblemKey" jdbcType="VARCHAR" />
+    <result column="evaluate_org_name" property="evaluateOrgName" jdbcType="VARCHAR" />
+    <result column="other_hz_type" property="otherHzType" jdbcType="VARCHAR" />
+    <result column="achv_inventor" property="achvInventor" jdbcType="VARCHAR" />
+    <result column="un_ptxk_price" property="unPtxkPrice" jdbcType="DOUBLE" />
+    <result column="delegate_price" property="delegatePrice" jdbcType="DOUBLE" />
+    <result column="union_price" property="unionPrice" jdbcType="DOUBLE" />
+    <result column="alliance" property="alliance" jdbcType="TINYINT" />
+    <result column="accept_no" property="acceptNo" jdbcType="VARCHAR" />
+    <result column="accept_url" property="acceptUrl" jdbcType="VARCHAR" />
+    <result column="is_accept_ask" property="isAcceptAsk" jdbcType="TINYINT" />
+    <result column="ask_type" property="askType" jdbcType="VARCHAR" />
+    <result column="service_price" property="servicePrice" jdbcType="DOUBLE" />
+    <result column="materi_type_ids" property="materiTypeIds" jdbcType="VARCHAR" />
+    <result column="materi_type_names" property="materiTypeNames" jdbcType="VARCHAR" />
+    <result column="prod_ids" property="prodIds" jdbcType="VARCHAR" />
+    <result column="prod_names" property="prodNames" jdbcType="VARCHAR" />
+    <result column="recommend_trade" property="recommendTrade" jdbcType="VARCHAR" />
+    <result column="trade_child_ids" property="tradeChildIds" jdbcType="VARCHAR" />
+    <result column="trade_child_names" property="tradeChildNames" jdbcType="VARCHAR" />
+    <result column="gyi_hjie_desc" property="gyiHjieDesc" jdbcType="LONGVARCHAR" />
+    <result column="invest_gs" property="investGs" jdbcType="LONGVARCHAR" />
+    <result column="hardware_desc" property="hardwareDesc" jdbcType="LONGVARCHAR" />
+    <result column="economy_desc" property="economyDesc" jdbcType="LONGVARCHAR" />
+    <result column="major_problem_intro" property="majorProblemIntro" jdbcType="LONGVARCHAR" />
+    <result column="other_hz_desc" property="otherHzDesc" jdbcType="LONGVARCHAR" />
+    <result column="achv_cx_info" property="achvCxInfo" jdbcType="LONGVARCHAR" />
+    <association property="expert" javaType="Expert">
+    	<id column="account_id" property="id"/>
+    </association>
+  </resultMap>
+  <resultMap id="achvMap" type="cn.fundview.modules.model.AchvNew">
+  	 <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="TINYINT" />
+    <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="achvJoinMap" type="cn.fundview.modules.model.AchvNew">
+  	 <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="valid" property="valid" jdbcType="TINYINT" />
+    <result column="edit_time" property="editDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, trade_ids, trade_names, gyi_hjie, other_gyi_hjie, tech_jd, zl_status, zl_no, 
+    zl_url, dept, owner_name, phone, email, zr_way, ptxk_price, zr_price, publisher_id, 
+    publish_date, tags, recommend, hot, latest, recommend_num, hot_num, latest_num, status, 
+    no, valid, update_time, is_publish, is_delete, ck_price, apply_comp_name, is_apply, 
+    is_jd, jd_url, materi_ids, materi_names, prod_type_ids, prod_type_names, major_problem_key, 
+    evaluate_org_name, other_hz_type, achv_inventor, un_ptxk_price, delegate_price, union_price, 
+    alliance, accept_no, accept_url, is_accept_ask, ask_type, service_price, materi_type_ids, 
+    materi_type_names, prod_ids, prod_names, recommend_trade, trade_child_ids, trade_child_names
+  </sql>
+  <sql id="Blob_Column_List" >
+    gyi_hjie_desc, invest_gs, hardware_desc, economy_desc, major_problem_intro, other_hz_desc, 
+    achv_cx_info
+  </sql>
+  <sql id="achv_item">
+  	id,name,phone,owner_name,publish_date,valid
+  </sql>
+   <sql id="achv_join_item">
+    aj.achv_id as id, aj.achv_name as name,ac.owner_name,ac.phone, ac.publish_date as publishDate, aj.edit_time as editDate,valid
+   </sql>
+   <select id="get" resultMap="BaseResultMap">
+		select *
+		from achv_new e 
+		where e.id = #{id,jdbcType=INTEGER}
+	</select>
+  <select id="findAllListItem" resultMap="achvMap">
+  		select 
+  		<include refid="achv_item" />
+		from achv_new  where is_delete = 0  order by publish_date desc
+  </select>
+   <select id="findNoListItem" resultMap="achvJoinMap">
+  		select 
+  		<include refid="achv_join_item" />
+   		FROM achv_join_record aj left join achv_new ac on aj.achv_id = ac.id where ac.status = 2 and aj.deal_status = 1 order by aj.edit_time
+  </select>
+   <select id="findNowListItem" resultMap="achvJoinMap">
+  		select 
+  		<include refid="achv_join_item" />
+		FROM achv_join_record aj left join achv_new ac on aj.achv_id = ac.id where ac.status = 2 and aj.deal_status = 2 order by aj.edit_time
+  </select>
+   <select id="findEndListItem" resultMap="achvJoinMap">
+  		select 
+  		<include refid="achv_join_item" />
+		FROM achv_join_record aj left join achv_new ac on aj.achv_id = ac.id where ac.status = 2 and aj.deal_status = 3 order by aj.edit_time
+  </select>
+   <update id="update" parameterType="cn.fundview.modules.model.AchvNew" >
+    update achv_new
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeIds != null" >
+        trade_ids = #{tradeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeNames != null" >
+        trade_names = #{tradeNames,jdbcType=VARCHAR},
+      </if>
+      <if test="gyiHjie != null" >
+        gyi_hjie = #{gyiHjie,jdbcType=VARCHAR},
+      </if>
+      <if test="otherGyiHjie != null" >
+        other_gyi_hjie = #{otherGyiHjie,jdbcType=VARCHAR},
+      </if>
+      <if test="techJd != null" >
+        tech_jd = #{techJd,jdbcType=INTEGER},
+      </if>
+      <if test="zlStatus != null" >
+        zl_status = #{zlStatus,jdbcType=INTEGER},
+      </if>
+      <if test="zlNo != null" >
+        zl_no = #{zlNo,jdbcType=VARCHAR},
+      </if>
+      <if test="zlUrl != null" >
+        zl_url = #{zlUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="dept != null" >
+        dept = #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null" >
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="zrWay != null" >
+        zr_way = #{zrWay,jdbcType=VARCHAR},
+      </if>
+      <if test="ptxkPrice != null" >
+        ptxk_price = #{ptxkPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="zrPrice != null" >
+        zr_price = #{zrPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="publisherId != null" >
+        publisher_id = #{publisherId,jdbcType=INTEGER},
+      </if>
+      <if test="publishDate != null" >
+        publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=TINYINT},
+      </if>
+      <if test="hot != null" >
+        hot = #{hot,jdbcType=TINYINT},
+      </if>
+      <if test="latest != null" >
+        latest = #{latest,jdbcType=TINYINT},
+      </if>
+      <if test="recommendNum != null" >
+        recommend_num = #{recommendNum,jdbcType=INTEGER},
+      </if>
+      <if test="hotNum != null" >
+        hot_num = #{hotNum,jdbcType=INTEGER},
+      </if>
+      <if test="latestNum != null" >
+        latest_num = #{latestNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="no != null" >
+        no = #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=TINYINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPublish != null" >
+        is_publish = #{isPublish,jdbcType=TINYINT},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=TINYINT},
+      </if>
+      <if test="ckPrice != null" >
+        ck_price = #{ckPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="applyCompName != null" >
+        apply_comp_name = #{applyCompName,jdbcType=VARCHAR},
+      </if>
+      <if test="isApply != null" >
+        is_apply = #{isApply,jdbcType=TINYINT},
+      </if>
+      <if test="isJd != null" >
+        is_jd = #{isJd,jdbcType=TINYINT},
+      </if>
+      <if test="jdUrl != null" >
+        jd_url = #{jdUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="materiIds != null" >
+        materi_ids = #{materiIds,jdbcType=VARCHAR},
+      </if>
+      <if test="materiNames != null" >
+        materi_names = #{materiNames,jdbcType=VARCHAR},
+      </if>
+      <if test="prodTypeIds != null" >
+        prod_type_ids = #{prodTypeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="prodTypeNames != null" >
+        prod_type_names = #{prodTypeNames,jdbcType=VARCHAR},
+      </if>
+      <if test="majorProblemKey != null" >
+        major_problem_key = #{majorProblemKey,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluateOrgName != null" >
+        evaluate_org_name = #{evaluateOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherHzType != null" >
+        other_hz_type = #{otherHzType,jdbcType=VARCHAR},
+      </if>
+      <if test="achvInventor != null" >
+        achv_inventor = #{achvInventor,jdbcType=VARCHAR},
+      </if>
+      <if test="unPtxkPrice != null" >
+        un_ptxk_price = #{unPtxkPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="delegatePrice != null" >
+        delegate_price = #{delegatePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="unionPrice != null" >
+        union_price = #{unionPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="alliance != null" >
+        alliance = #{alliance,jdbcType=TINYINT},
+      </if>
+      <if test="acceptNo != null" >
+        accept_no = #{acceptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptUrl != null" >
+        accept_url = #{acceptUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isAcceptAsk != null" >
+        is_accept_ask = #{isAcceptAsk,jdbcType=TINYINT},
+      </if>
+      <if test="askType != null" >
+        ask_type = #{askType,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePrice != null" >
+        service_price = #{servicePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="materiTypeIds != null" >
+        materi_type_ids = #{materiTypeIds,jdbcType=VARCHAR},
+      </if>
+      <if test="materiTypeNames != null" >
+        materi_type_names = #{materiTypeNames,jdbcType=VARCHAR},
+      </if>
+      <if test="prodIds != null" >
+        prod_ids = #{prodIds,jdbcType=VARCHAR},
+      </if>
+      <if test="prodNames != null" >
+        prod_names = #{prodNames,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendTrade != null" >
+        recommend_trade = #{recommendTrade,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeChildIds != null" >
+        trade_child_ids = #{tradeChildIds,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeChildNames != null" >
+        trade_child_names = #{tradeChildNames,jdbcType=VARCHAR},
+      </if>
+      <if test="gyiHjieDesc != null" >
+        gyi_hjie_desc = #{gyiHjieDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="investGs != null" >
+        invest_gs = #{investGs,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="hardwareDesc != null" >
+        hardware_desc = #{hardwareDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="economyDesc != null" >
+        economy_desc = #{economyDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="majorProblemIntro != null" >
+        major_problem_intro = #{majorProblemIntro,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="otherHzDesc != null" >
+        other_hz_desc = #{otherHzDesc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="achvCxInfo != null" >
+        achv_cx_info = #{achvCxInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.fundview.modules.model.AchvNew" >
+    update achv_new
+    set name = #{name,jdbcType=VARCHAR},
+      trade_ids = #{tradeIds,jdbcType=VARCHAR},
+      trade_names = #{tradeNames,jdbcType=VARCHAR},
+      gyi_hjie = #{gyiHjie,jdbcType=VARCHAR},
+      other_gyi_hjie = #{otherGyiHjie,jdbcType=VARCHAR},
+      tech_jd = #{techJd,jdbcType=INTEGER},
+      zl_status = #{zlStatus,jdbcType=INTEGER},
+      zl_no = #{zlNo,jdbcType=VARCHAR},
+      zl_url = #{zlUrl,jdbcType=VARCHAR},
+      dept = #{dept,jdbcType=VARCHAR},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      zr_way = #{zrWay,jdbcType=VARCHAR},
+      ptxk_price = #{ptxkPrice,jdbcType=DOUBLE},
+      zr_price = #{zrPrice,jdbcType=DOUBLE},
+      publisher_id = #{publisherId,jdbcType=INTEGER},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      tags = #{tags,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=TINYINT},
+      hot = #{hot,jdbcType=TINYINT},
+      latest = #{latest,jdbcType=TINYINT},
+      recommend_num = #{recommendNum,jdbcType=INTEGER},
+      hot_num = #{hotNum,jdbcType=INTEGER},
+      latest_num = #{latestNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      no = #{no,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=TINYINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_publish = #{isPublish,jdbcType=TINYINT},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      ck_price = #{ckPrice,jdbcType=DOUBLE},
+      apply_comp_name = #{applyCompName,jdbcType=VARCHAR},
+      is_apply = #{isApply,jdbcType=TINYINT},
+      is_jd = #{isJd,jdbcType=TINYINT},
+      jd_url = #{jdUrl,jdbcType=VARCHAR},
+      materi_ids = #{materiIds,jdbcType=VARCHAR},
+      materi_names = #{materiNames,jdbcType=VARCHAR},
+      prod_type_ids = #{prodTypeIds,jdbcType=VARCHAR},
+      prod_type_names = #{prodTypeNames,jdbcType=VARCHAR},
+      major_problem_key = #{majorProblemKey,jdbcType=VARCHAR},
+      evaluate_org_name = #{evaluateOrgName,jdbcType=VARCHAR},
+      other_hz_type = #{otherHzType,jdbcType=VARCHAR},
+      achv_inventor = #{achvInventor,jdbcType=VARCHAR},
+      un_ptxk_price = #{unPtxkPrice,jdbcType=DOUBLE},
+      delegate_price = #{delegatePrice,jdbcType=DOUBLE},
+      union_price = #{unionPrice,jdbcType=DOUBLE},
+      alliance = #{alliance,jdbcType=TINYINT},
+      accept_no = #{acceptNo,jdbcType=VARCHAR},
+      accept_url = #{acceptUrl,jdbcType=VARCHAR},
+      is_accept_ask = #{isAcceptAsk,jdbcType=TINYINT},
+      ask_type = #{askType,jdbcType=VARCHAR},
+      service_price = #{servicePrice,jdbcType=DOUBLE},
+      materi_type_ids = #{materiTypeIds,jdbcType=VARCHAR},
+      materi_type_names = #{materiTypeNames,jdbcType=VARCHAR},
+      prod_ids = #{prodIds,jdbcType=VARCHAR},
+      prod_names = #{prodNames,jdbcType=VARCHAR},
+      recommend_trade = #{recommendTrade,jdbcType=VARCHAR},
+      trade_child_ids = #{tradeChildIds,jdbcType=VARCHAR},
+      trade_child_names = #{tradeChildNames,jdbcType=VARCHAR},
+      gyi_hjie_desc = #{gyiHjieDesc,jdbcType=LONGVARCHAR},
+      invest_gs = #{investGs,jdbcType=LONGVARCHAR},
+      hardware_desc = #{hardwareDesc,jdbcType=LONGVARCHAR},
+      economy_desc = #{economyDesc,jdbcType=LONGVARCHAR},
+      major_problem_intro = #{majorProblemIntro,jdbcType=LONGVARCHAR},
+      other_hz_desc = #{otherHzDesc,jdbcType=LONGVARCHAR},
+      achv_cx_info = #{achvCxInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fundview.modules.model.AchvNew" >
+    update achv_new
+    set name = #{name,jdbcType=VARCHAR},
+      trade_ids = #{tradeIds,jdbcType=VARCHAR},
+      trade_names = #{tradeNames,jdbcType=VARCHAR},
+      gyi_hjie = #{gyiHjie,jdbcType=VARCHAR},
+      other_gyi_hjie = #{otherGyiHjie,jdbcType=VARCHAR},
+      tech_jd = #{techJd,jdbcType=INTEGER},
+      zl_status = #{zlStatus,jdbcType=INTEGER},
+      zl_no = #{zlNo,jdbcType=VARCHAR},
+      zl_url = #{zlUrl,jdbcType=VARCHAR},
+      dept = #{dept,jdbcType=VARCHAR},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      zr_way = #{zrWay,jdbcType=VARCHAR},
+      ptxk_price = #{ptxkPrice,jdbcType=DOUBLE},
+      zr_price = #{zrPrice,jdbcType=DOUBLE},
+      publisher_id = #{publisherId,jdbcType=INTEGER},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      tags = #{tags,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=TINYINT},
+      hot = #{hot,jdbcType=TINYINT},
+      latest = #{latest,jdbcType=TINYINT},
+      recommend_num = #{recommendNum,jdbcType=INTEGER},
+      hot_num = #{hotNum,jdbcType=INTEGER},
+      latest_num = #{latestNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      no = #{no,jdbcType=VARCHAR},
+      valid = #{valid,jdbcType=TINYINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_publish = #{isPublish,jdbcType=TINYINT},
+      is_delete = #{isDelete,jdbcType=TINYINT},
+      ck_price = #{ckPrice,jdbcType=DOUBLE},
+      apply_comp_name = #{applyCompName,jdbcType=VARCHAR},
+      is_apply = #{isApply,jdbcType=TINYINT},
+      is_jd = #{isJd,jdbcType=TINYINT},
+      jd_url = #{jdUrl,jdbcType=VARCHAR},
+      materi_ids = #{materiIds,jdbcType=VARCHAR},
+      materi_names = #{materiNames,jdbcType=VARCHAR},
+      prod_type_ids = #{prodTypeIds,jdbcType=VARCHAR},
+      prod_type_names = #{prodTypeNames,jdbcType=VARCHAR},
+      major_problem_key = #{majorProblemKey,jdbcType=VARCHAR},
+      evaluate_org_name = #{evaluateOrgName,jdbcType=VARCHAR},
+      other_hz_type = #{otherHzType,jdbcType=VARCHAR},
+      achv_inventor = #{achvInventor,jdbcType=VARCHAR},
+      un_ptxk_price = #{unPtxkPrice,jdbcType=DOUBLE},
+      delegate_price = #{delegatePrice,jdbcType=DOUBLE},
+      union_price = #{unionPrice,jdbcType=DOUBLE},
+      alliance = #{alliance,jdbcType=TINYINT},
+      accept_no = #{acceptNo,jdbcType=VARCHAR},
+      accept_url = #{acceptUrl,jdbcType=VARCHAR},
+      is_accept_ask = #{isAcceptAsk,jdbcType=TINYINT},
+      ask_type = #{askType,jdbcType=VARCHAR},
+      service_price = #{servicePrice,jdbcType=DOUBLE},
+      materi_type_ids = #{materiTypeIds,jdbcType=VARCHAR},
+      materi_type_names = #{materiTypeNames,jdbcType=VARCHAR},
+      prod_ids = #{prodIds,jdbcType=VARCHAR},
+      prod_names = #{prodNames,jdbcType=VARCHAR},
+      recommend_trade = #{recommendTrade,jdbcType=VARCHAR},
+      trade_child_ids = #{tradeChildIds,jdbcType=VARCHAR},
+      trade_child_names = #{tradeChildNames,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.setting.dao.InsideTaskMapper" >
+  <resultMap id="BaseResultMap" type="cn.fundview.setting.model.InsideTask" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="timer" property="timer" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="CHAR" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="deadline" property="deadline" jdbcType="TIMESTAMP" />
+    <result column="defer_time_remarks" property="deferTimeRemarks" jdbcType="VARCHAR" />
+    <result column="task_status" property="taskStatus" jdbcType="CHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <association column="parent_id" property="parentTask" select="selectByPrimaryKey"></association>
+    <association column="create_by" property="createBy" select="cn.fundview.setting.dao.UserDao.get"></association>
+    <association column="update_by" property="updateBy" select="cn.fundview.setting.dao.UserDao.get"></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, parent_id, title, description, timer, level, type, deadline, defer_time_remarks, 
+    task_status, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_inside_task
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    t_inside_task.id,
+    t_inside_task.parent_id,
+    t_inside_task.title,
+    t_inside_task.description,
+    t_inside_task.timer,
+    t_inside_task.level,
+    t_inside_task.type,
+    t_inside_task.deadline,
+    t_inside_task.defer_time_remarks,
+    t_inside_task.task_status,
+    t_inside_task.create_by ,
+    t_inside_task.create_date ,
+    t_inside_task.update_by,
+    t_inside_task.update_date,
+    t_inside_task.remarks,
+    t_inside_task.del_flag
+    from t_inside_task
+    where t_inside_task.del_flag = '0'
+  </select>
+  <select id="selectByOfficeId" resultMap="BaseResultMap">
+    select
+    t_inside_task.id,
+    t_inside_task.parent_id,
+    t_inside_task.title,
+    t_inside_task.description,
+    t_inside_task.timer,
+    t_inside_task.level,
+    t_inside_task.type,
+    t_inside_task.deadline,
+    t_inside_task.defer_time_remarks,
+    t_inside_task.task_status,
+    t_inside_task.create_by ,
+    t_inside_task.create_date ,
+    t_inside_task.update_by,
+    t_inside_task.update_date,
+    t_inside_task.remarks,
+    t_inside_task.del_flag
+    from
+    t_inside_task
+    join t_task_office_order on t_inside_task.id = t_task_office_order.task_id
+    where t_inside_task.del_flag = '0'
+    and t_task_office_order.first_agent = #{officeId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select
+    t_inside_task.id,
+    t_inside_task.parent_id,
+    t_inside_task.title,
+    t_inside_task.description,
+    t_inside_task.timer,
+    t_inside_task.level,
+    t_inside_task.type,
+    t_inside_task.deadline,
+    t_inside_task.defer_time_remarks,
+    t_inside_task.task_status,
+    t_inside_task.create_by ,
+    t_inside_task.create_date ,
+    t_inside_task.update_by,
+    t_inside_task.update_date,
+    t_inside_task.remarks,
+    t_inside_task.del_flag
+    from
+    t_inside_task
+    join t_task_user_order on t_inside_task.id = t_task_user_order.task_id
+    where t_inside_task.del_flag = '0'
+    and t_task_user_order.consumer = #{officeId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrderId" resultMap="BaseResultMap">
+    SELECT
+    t_inside_task.id,
+    t_inside_task.parent_id,
+    t_inside_task.title,
+    t_inside_task.description,
+    t_inside_task.timer,
+    t_inside_task.level,
+    t_inside_task.type,
+    t_inside_task.deadline,
+    t_inside_task.defer_time_remarks,
+    t_inside_task.task_status,
+    t_inside_task.create_by,
+    t_inside_task.create_date,
+    t_inside_task.update_by,
+    t_inside_task.update_date,
+    t_inside_task.remarks,
+    t_inside_task.del_flag
+    FROM
+    t_inside_task
+    JOIN t_task_user_order ON t_inside_task.id = t_task_user_order.task_id
+    WHERE
+    t_task_user_order.id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCreateUser" resultMap="BaseResultMap">
+   select
+    t_inside_task.id,
+    t_inside_task.parent_id,
+    t_inside_task.title,
+    t_inside_task.description,
+    t_inside_task.timer,
+    t_inside_task.level,
+    t_inside_task.type,
+    t_inside_task.deadline,
+    t_inside_task.defer_time_remarks,
+    t_inside_task.task_status,
+    t_inside_task.create_by ,
+    t_inside_task.create_date ,
+    t_inside_task.update_by,
+    t_inside_task.update_date,
+    t_inside_task.remarks,
+    t_inside_task.del_flag
+    from t_inside_task
+    where t_inside_task.del_flag = '0'
+    AND t_inside_task.create_by = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParentId" resultMap="BaseResultMap">
+    select
+    t_inside_task.id,
+    t_inside_task.parent_id,
+    t_inside_task.title,
+    t_inside_task.description,
+    t_inside_task.timer,
+    t_inside_task.level,
+    t_inside_task.type,
+    t_inside_task.deadline,
+    t_inside_task.defer_time_remarks,
+    t_inside_task.task_status,
+    t_inside_task.create_by ,
+    t_inside_task.create_date ,
+    t_inside_task.update_by,
+    t_inside_task.update_date,
+    t_inside_task.remarks,
+    t_inside_task.del_flag
+    from t_inside_task
+    where t_inside_task.del_flag = '0'
+    AND t_inside_task.parent_id = #{parentId,jdbcType=VARCHAR}
+  </select>
+  <select id="findInquiryList" resultMap="BaseResultMap">
+    select
+      t_inside_task.id,
+      t_inside_task.parent_id,
+      t_inside_task.title,
+      t_inside_task.description,
+      t_inside_task.timer,
+      t_inside_task.level,
+      t_inside_task.type,
+      t_inside_task.deadline,
+      t_inside_task.defer_time_remarks,
+      t_inside_task.task_status,
+      t_inside_task.create_by ,
+      t_inside_task.create_date ,
+      t_inside_task.update_by,
+      t_inside_task.update_date,
+      t_inside_task.remarks,
+      t_inside_task.del_flag
+    from t_inside_task
+    where t_inside_task.del_flag = '0'
+    AND t_inside_task.task_status = '1'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_inside_task
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.fundview.setting.model.InsideTask" >
+    insert into t_inside_task (id, parent_id, title, 
+      description, timer, level, 
+      type, deadline, defer_time_remarks, 
+      task_status, create_by, create_date, 
+      update_by, update_date, remarks, 
+      del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{timer,jdbcType=VARCHAR}, #{level,jdbcType=CHAR}, 
+      #{type,jdbcType=CHAR}, #{deadline,jdbcType=TIMESTAMP}, #{deferTimeRemarks,jdbcType=VARCHAR}, 
+      #{taskStatus,jdbcType=CHAR}, #{createBy.id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy.id,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fundview.setting.model.InsideTask" >
+    insert into t_inside_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="timer != null" >
+        timer,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="deadline != null" >
+        deadline,
+      </if>
+      <if test="deferTimeRemarks != null" >
+        defer_time_remarks,
+      </if>
+      <if test="taskStatus != null" >
+        task_status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="timer != null" >
+        #{timer,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="deadline != null" >
+        #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deferTimeRemarks != null" >
+        #{deferTimeRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="taskStatus != null" >
+        #{taskStatus,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.setting.model.InsideTask" >
+    update t_inside_task
+    <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="timer != null" >
+        timer = #{timer,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=CHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="deadline != null" >
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deferTimeRemarks != null" >
+        defer_time_remarks = #{deferTimeRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="taskStatus != null" >
+        task_status = #{taskStatus,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fundview.setting.model.InsideTask" >
+    update t_inside_task
+    set parent_id = #{parentId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      timer = #{timer,jdbcType=VARCHAR},
+      level = #{level,jdbcType=CHAR},
+      type = #{type,jdbcType=CHAR},
+      deadline = #{deadline,jdbcType=TIMESTAMP},
+      defer_time_remarks = #{deferTimeRemarks,jdbcType=VARCHAR},
+      task_status = #{taskStatus,jdbcType=CHAR},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy.id,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

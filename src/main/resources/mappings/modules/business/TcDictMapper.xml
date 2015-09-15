@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.TcDictMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.TcDict">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="dict_key" property="dictKey" jdbcType="VARCHAR"/>
+        <result column="dict_value" property="dictValue" jdbcType="VARCHAR"/>
+        <result column="dict_type" property="dictType" jdbcType="VARCHAR"/>
+        <result column="dict_sort" property="dictSort" jdbcType="INTEGER"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, dict_key, dict_value, dict_type, dict_sort, del_flag
+    </sql>
+
+    <!-- <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer"
+        > select <include refid="Base_Column_List" /> from tc_dict where id = #{id,jdbcType=INTEGER}
+        </select> <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer"
+        > delete from tc_dict where id = #{id,jdbcType=INTEGER} </delete> <insert
+        id="insert" parameterType="cn.fundview.modules.model.TcDict" > insert into
+        tc_dict (id, dict_key, dict_value, dict_type, dict_sort, del_flag ) values
+        (#{id,jdbcType=INTEGER}, #{dictKey,jdbcType=VARCHAR}, #{dictValue,jdbcType=VARCHAR},
+        #{dictType,jdbcType=VARCHAR}, #{dictSort,jdbcType=INTEGER}, #{delFlag,jdbcType=CHAR}
+        ) </insert> <insert id="insertSelective" parameterType="cn.fundview.modules.model.TcDict"
+        > insert into tc_dict <trim prefix="(" suffix=")" suffixOverrides="," > <if
+        test="id != null" > id, </if> <if test="dictKey != null" > dict_key, </if>
+        <if test="dictValue != null" > dict_value, </if> <if test="dictType != null"
+        > dict_type, </if> <if test="dictSort != null" > dict_sort, </if> <if test="delFlag
+        != null" > del_flag, </if> </trim> <trim prefix="values (" suffix=")" suffixOverrides=","
+        > <if test="id != null" > #{id,jdbcType=INTEGER}, </if> <if test="dictKey
+        != null" > #{dictKey,jdbcType=VARCHAR}, </if> <if test="dictValue != null"
+        > #{dictValue,jdbcType=VARCHAR}, </if> <if test="dictType != null" > #{dictType,jdbcType=VARCHAR},
+        </if> <if test="dictSort != null" > #{dictSort,jdbcType=INTEGER}, </if> <if
+        test="delFlag != null" > #{delFlag,jdbcType=CHAR}, </if> </trim> </insert>
+        <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.modules.model.TcDict"
+        > update tc_dict <set > <if test="dictKey != null" > dict_key = #{dictKey,jdbcType=VARCHAR},
+        </if> <if test="dictValue != null" > dict_value = #{dictValue,jdbcType=VARCHAR},
+        </if> <if test="dictType != null" > dict_type = #{dictType,jdbcType=VARCHAR},
+        </if> <if test="dictSort != null" > dict_sort = #{dictSort,jdbcType=INTEGER},
+        </if> <if test="delFlag != null" > del_flag = #{delFlag,jdbcType=CHAR}, </if>
+        </set> where id = #{id,jdbcType=INTEGER} </update> <update id="updateByPrimaryKey"
+        parameterType="cn.fundview.modules.model.TcDict" > update tc_dict set dict_key
+        = #{dictKey,jdbcType=VARCHAR}, dict_value = #{dictValue,jdbcType=VARCHAR},
+        dict_type = #{dictType,jdbcType=VARCHAR}, dict_sort = #{dictSort,jdbcType=INTEGER},
+        del_flag = #{delFlag,jdbcType=CHAR} where id = #{id,jdbcType=INTEGER} </update> -->
+
+    <select id="getTcDictsByTypeAndKey" resultType="cn.fundview.modules.model.TcDict"
+            parameterType="cn.fundview.modules.model.TcDict">
+        select
+        <include refid="Base_Column_List"/>
+        from tc_dict
+        where dict_type = #{dictType}
+        <if test="dictKey != null">
+
+            and dict_key = #{dictKey}
+        </if>
+    </select>
+
+</mapper>

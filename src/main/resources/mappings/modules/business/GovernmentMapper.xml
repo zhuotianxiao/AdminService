@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.GovernmentMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.Government">
+        <id column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="website" property="website" jdbcType="VARCHAR"/>
+        <result column="area_names" property="areaNames" jdbcType="VARCHAR"/>
+        <result column="area_ids" property="areaIds" jdbcType="VARCHAR"/>
+        <result column="manager" property="manager" jdbcType="VARCHAR"/>
+        <result column="linkman" property="linkman" jdbcType="VARCHAR"/>
+        <result column="linkman_phone" property="linkmanPhone" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        account_id, name, type, intro, tel, addr, email, website, area_names, area_ids, manager,
+        linkman, linkman_phone, create_time, update_time, logo
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from government
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from government
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.fundview.modules.model.Government">
+        insert into government (account_id, name, type,
+        intro, tel, addr, email,
+        website, area_names, area_ids,
+        manager, linkman, linkman_phone,
+        create_time, update_time, logo
+        )
+        values (#{accountId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},
+        #{intro,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{website,jdbcType=VARCHAR}, #{areaNames,jdbcType=VARCHAR}, #{areaIds,jdbcType=VARCHAR},
+        #{manager,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, #{linkmanPhone,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{logo,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.fundview.modules.model.Government">
+        insert into government
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="accountId != null">
+                account_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="intro != null">
+                intro,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="addr != null">
+                addr,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="website != null">
+                website,
+            </if>
+            <if test="areaNames != null">
+                area_names,
+            </if>
+            <if test="areaIds != null">
+                area_ids,
+            </if>
+            <if test="manager != null">
+                manager,
+            </if>
+            <if test="linkman != null">
+                linkman,
+            </if>
+            <if test="linkmanPhone != null">
+                linkman_phone,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="accountId != null">
+                #{accountId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="intro != null">
+                #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="addr != null">
+                #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="areaNames != null">
+                #{areaNames,jdbcType=VARCHAR},
+            </if>
+            <if test="areaIds != null">
+                #{areaIds,jdbcType=VARCHAR},
+            </if>
+            <if test="manager != null">
+                #{manager,jdbcType=VARCHAR},
+            </if>
+            <if test="linkman != null">
+                #{linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="linkmanPhone != null">
+                #{linkmanPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="logo != null">
+                #{logo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.modules.model.Government">
+        update government
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="intro != null">
+                intro = #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="addr != null">
+                addr = #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                website = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="areaNames != null">
+                area_names = #{areaNames,jdbcType=VARCHAR},
+            </if>
+            <if test="areaIds != null">
+                area_ids = #{areaIds,jdbcType=VARCHAR},
+            </if>
+            <if test="manager != null">
+                manager = #{manager,jdbcType=VARCHAR},
+            </if>
+            <if test="linkman != null">
+                linkman = #{linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="linkmanPhone != null">
+                linkman_phone = #{linkmanPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.fundview.modules.model.Government">
+        update government
+        set name = #{name,jdbcType=VARCHAR},
+        type = #{type,jdbcType=INTEGER},
+        intro = #{intro,jdbcType=VARCHAR},
+        tel = #{tel,jdbcType=VARCHAR},
+        addr = #{addr,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        website = #{website,jdbcType=VARCHAR},
+        area_names = #{areaNames,jdbcType=VARCHAR},
+        area_ids = #{areaIds,jdbcType=VARCHAR},
+        manager = #{manager,jdbcType=VARCHAR},
+        linkman = #{linkman,jdbcType=VARCHAR},
+        linkman_phone = #{linkmanPhone,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        logo = #{logo,jdbcType=VARCHAR}
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </update>
+</mapper>

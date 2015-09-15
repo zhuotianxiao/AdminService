@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.GovMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.Gov">
+        <id column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="website" property="website" jdbcType="VARCHAR"/>
+        <result column="area_names" property="areaNames" jdbcType="VARCHAR"/>
+        <result column="area_ids" property="areaIds" jdbcType="VARCHAR"/>
+        <result column="manager" property="manager" jdbcType="VARCHAR"/>
+        <result column="linkman" property="linkman" jdbcType="VARCHAR"/>
+        <result column="linkman_phone" property="linkmanPhone" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+        <association property="account" javaType="cn.fundview.modules.model.Account">
+
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="type" jdbcType="INTEGER" property="type"/>
+            <result column="auto_login_code" jdbcType="VARCHAR" property="autoLoginCode"/>
+            <result column="valid" jdbcType="TINYINT" property="valid"/>
+            <result column="is_auth" jdbcType="TINYINT" property="isAuth"/>
+            <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+            <result column="create_time" jdbcType="TIMESTAMP" property="createDate"/>
+            <result column="data_id" jdbcType="INTEGER" property="dataId"/>
+            <result column="email_checked" jdbcType="TINYINT" property="emailChecked"/>
+        </association>
+    </resultMap>
+    <resultMap id="BlobResultMap" type="cn.fundview.modules.model.Gov" extends="BaseResultMap">
+
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    g.account_id, g.name, g.type, g.tel, g.addr, g.email, g.website, g.area_names, g.manager,
+    g.linkman, g.linkman_phone, g.create_time, g.update_time, g.logo
+  </sql>
+    <select id="getList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        a.id,a.username,a.valid
+        from government g, account a
+        where g.account_id = a.id
+    </select>
+    <select id="get" resultMap="BlobResultMap" parameterType="cn.fundview.modules.model.Gov">
+        select
+        *
+        from government g, account a
+        where g.account_id = a.id and g.account_id = #{accountId,jdbcType=INTEGER}
+    </select>
+
+</mapper>

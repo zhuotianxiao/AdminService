@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.ConsultationMapper" >
+  <resultMap id="BaseResultMap" type="cn.fundview.modules.model.Consultation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="comp_id" property="compId" jdbcType="INTEGER" />
+    <result column="consulation_man" property="consulationMan" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="expert_id" property="expertId" jdbcType="INTEGER" />
+    <result column="expert_name" property="expertName" jdbcType="VARCHAR" />
+    <result column="expert_phone" property="expertPhone" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="appoint_time" property="appointTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="cancel_status" property="cancelStatus" jdbcType="INTEGER" />
+    <result column="pay_id" property="payId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="consulation_type" property="consulationType" jdbcType="INTEGER" />
+    <result column="mark" property="mark" jdbcType="TINYINT" />
+    <result column="cancel_cause" property="cancelCause" jdbcType="VARCHAR" />
+    <result column="check_cause" property="checkCause" jdbcType="VARCHAR" />
+    <result column="evaluate" property="evaluate" jdbcType="TINYINT" />
+    <result column="cancel_check_mark" property="cancelCheckMark" jdbcType="VARCHAR" />
+
+    <association property="evaluation" javaType="cn.fundview.modules.model.ExpertEvaluation">
+
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="service_id" property="serviceId" jdbcType="INTEGER" />
+      <result column="expert_id" property="expertId" jdbcType="INTEGER" />
+      <result column="company_id" property="companyId" jdbcType="INTEGER" />
+      <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+      <result column="satisfaction" property="satisfaction" jdbcType="INTEGER" />
+      <result column="timeliness" property="timeliness" jdbcType="TINYINT" />
+      <result column="solving_degree" property="solvingDegree" jdbcType="TINYINT" />
+      <result column="evalution_tag_ids" property="evalutionTagIds" jdbcType="VARCHAR" />
+    </association>
+
+    <association property="report" javaType="cn.fundview.modules.model.Report">
+
+      <id column="id" property="id" jdbcType="INTEGER" />
+      <result column="problem_manifest" property="problemManifest" jdbcType="VARCHAR" />
+      <result column="analyse" property="analyse" jdbcType="VARCHAR" />
+      <result column="adverse" property="adverse" jdbcType="VARCHAR" />
+      <result column="doc_path" property="docPath" jdbcType="VARCHAR" />
+      <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+      <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comp_id, consulation_man, phone, title, description, expert_id, expert_name, 
+    expert_phone, price, appoint_time, status, cancel_status, pay_id, create_date, update_time, 
+    consulation_type, mark, cancel_cause, check_cause, evaluate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from t_consultation_service ce,t_report r, t_expert_evaluation ee
+    where ce.id = #{id,jdbcType=INTEGER} and ce.id = r.id and ce.id = ee.service_id
+  </select>
+  <select id="selectByParam" resultType="cn.fundview.modules.model.Consultation">
+
+    select * from t_consultation_service
+    <where>
+
+      <if test="status != null">
+
+        status = #{status}
+
+      </if>
+      <if test="cancelStatus != null">
+
+      and  cancel_status = #{cancelStatus}
+
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_consultation_service
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.fundview.modules.model.Consultation" >
+    insert into t_consultation_service (id, comp_id, consulation_man, 
+      phone, title, description, 
+      expert_id, expert_name, expert_phone, 
+      price, appoint_time, status, 
+      cancel_status, pay_id, create_date, 
+      update_time, consulation_type, mark, 
+      cancel_cause, check_cause, evaluate
+      )
+    values (#{id,jdbcType=INTEGER}, #{compId,jdbcType=INTEGER}, #{consulationMan,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{expertId,jdbcType=INTEGER}, #{expertName,jdbcType=VARCHAR}, #{expertPhone,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{appointTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{cancelStatus,jdbcType=INTEGER}, #{payId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{consulationType,jdbcType=INTEGER}, #{mark,jdbcType=TINYINT}, 
+      #{cancelCause,jdbcType=VARCHAR}, #{checkCause,jdbcType=VARCHAR}, #{evaluate,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fundview.modules.model.Consultation" >
+    insert into t_consultation_service
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="compId != null" >
+        comp_id,
+      </if>
+      <if test="consulationMan != null" >
+        consulation_man,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="expertId != null" >
+        expert_id,
+      </if>
+      <if test="expertName != null" >
+        expert_name,
+      </if>
+      <if test="expertPhone != null" >
+        expert_phone,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="appointTime != null" >
+        appoint_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="cancelStatus != null" >
+        cancel_status,
+      </if>
+      <if test="payId != null" >
+        pay_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="consulationType != null" >
+        consulation_type,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+      <if test="cancelCause != null" >
+        cancel_cause,
+      </if>
+      <if test="checkCause != null" >
+        check_cause,
+      </if>
+      <if test="evaluate != null" >
+        evaluate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="compId != null" >
+        #{compId,jdbcType=INTEGER},
+      </if>
+      <if test="consulationMan != null" >
+        #{consulationMan,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="expertId != null" >
+        #{expertId,jdbcType=INTEGER},
+      </if>
+      <if test="expertName != null" >
+        #{expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="expertPhone != null" >
+        #{expertPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="appointTime != null" >
+        #{appointTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cancelStatus != null" >
+        #{cancelStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consulationType != null" >
+        #{consulationType,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=TINYINT},
+      </if>
+      <if test="cancelCause != null" >
+        #{cancelCause,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCause != null" >
+        #{checkCause,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluate != null" >
+        #{evaluate,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.modules.model.Consultation" >
+    update t_consultation_service
+    <set >
+      <if test="compId != null" >
+        comp_id = #{compId,jdbcType=INTEGER},
+      </if>
+      <if test="consulationMan != null" >
+        consulation_man = #{consulationMan,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="expertId != null" >
+        expert_id = #{expertId,jdbcType=INTEGER},
+      </if>
+      <if test="expertName != null" >
+        expert_name = #{expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="expertPhone != null" >
+        expert_phone = #{expertPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="appointTime != null" >
+        appoint_time = #{appointTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cancelStatus != null" >
+        cancel_status = #{cancelStatus,jdbcType=INTEGER},
+      </if>
+      <if test="payId != null" >
+        pay_id = #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="consulationType != null" >
+        consulation_type = #{consulationType,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=TINYINT},
+      </if>
+      <if test="cancelCause != null" >
+        cancel_cause = #{cancelCause,jdbcType=VARCHAR},
+      </if>
+      <if test="checkCause != null" >
+        check_cause = #{checkCause,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluate != null" >
+        evaluate = #{evaluate,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

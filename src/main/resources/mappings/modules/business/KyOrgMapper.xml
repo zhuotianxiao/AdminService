@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fundview.modules.dao.KyOrgMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.KyOrg">
+        <id column="account_id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="logo" jdbcType="VARCHAR" property="logo"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="linkman" jdbcType="VARCHAR" property="linkman"/>
+        <result column="linkman_phone" jdbcType="VARCHAR" property="linkmanPhone"/>
+        <result column="addr" jdbcType="VARCHAR" property="addr"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="website" jdbcType="VARCHAR" property="website"/>
+        <result column="service" jdbcType="VARCHAR" property="service"/>
+        <result column="area_names" jdbcType="VARCHAR" property="areaNames"/>
+        <result column="area_ids" jdbcType="VARCHAR" property="areaIds"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="recommend" jdbcType="TINYINT" property="recommend"/>
+        <result column="hot" jdbcType="TINYINT" property="hot"/>
+        <result column="latest" jdbcType="TINYINT" property="latest"/>
+        <result column="recommend_num" jdbcType="INTEGER" property="recommendNum"/>
+        <result column="hot_num" jdbcType="INTEGER" property="hotNum"/>
+        <result column="latest_num" jdbcType="INTEGER" property="latestNum"/>
+        <result column="choose" jdbcType="VARCHAR" property="choose"/>
+        <result column="tel_show" jdbcType="TINYINT" property="telShow"/>
+        <result column="collaborate_comp" jdbcType="VARCHAR" property="collaborateComp"/>
+        <result column="successful_case" jdbcType="VARCHAR" property="successfulCase"/>
+        <result column="linkman_position" jdbcType="VARCHAR" property="linkmanPosition"/>
+        <association property="account" javaType="cn.fundview.modules.model.Account">
+
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="type" jdbcType="INTEGER" property="type"/>
+            <result column="auto_login_code" jdbcType="VARCHAR" property="autoLoginCode"/>
+            <result column="valid" jdbcType="TINYINT" property="valid"/>
+            <result column="is_auth" jdbcType="TINYINT" property="isAuth"/>
+            <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+            <result column="create_time" jdbcType="TIMESTAMP" property="createDate"/>
+            <result column="data_id" jdbcType="INTEGER" property="dataId"/>
+            <result column="email_checked" jdbcType="TINYINT" property="emailChecked"/>
+        </association>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.fundview.modules.model.KyOrg">
+        <result column="intro" jdbcType="LONGVARCHAR" property="intro"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        k.account_id, k.name, k.logo, k.tel, k.linkman, k.linkman_phone, k.addr, k.email, k.website, k.service,
+        k.area_names, k.area_ids, k.create_time, k.update_time, k.recommend, k.hot, k.latest, k.recommend_num,
+        k.hot_num, k.latest_num, k.choose, k.tel_show, k.collaborate_comp, k.successful_case,k.linkman_position
+    </sql>
+    <sql id="Blob_Column_List">
+        intro
+    </sql>
+    <select id="get" parameterType="cn.fundview.modules.model.KyOrg" resultMap="ResultMapWithBLOBs">
+        select *
+        from ky_org k, account a
+        where k.account_id = a.id and k.account_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getSimple" resultMap="BaseResultMap" parameterType="cn.fundview.modules.model.KyOrg">
+        select a.username, k.name, k.linkman_phone,a.is_auth,k.account_id,k.linkman,
+        k.recommend,k.recommend_num,k.hot,k.hot_num,k.latest, k.latest_num
+        from ky_org k ,account a where a.id = k.account_id
+        and k.account_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        a.username,a.password,a.valid,a.is_auth
+        from ky_org k ,account a
+        where a.id = k.account_id
+    </select>
+
+    <update id="update" parameterType="cn.fundview.modules.model.KyOrg">
+        update ky_org
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="linkman != null">
+                linkman = #{linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="linkmanPhone != null">
+                linkman_phone = #{linkmanPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="addr != null">
+                addr = #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                website = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="service != null">
+                service = #{service,jdbcType=VARCHAR},
+            </if>
+            <if test="areaNames != null">
+                area_names = #{areaNames,jdbcType=VARCHAR},
+            </if>
+            <if test="areaIds != null">
+                area_ids = #{areaIds,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_time = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_time = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="recommend != null">
+                recommend = #{recommend,jdbcType=TINYINT},
+            </if>
+            <if test="hot != null">
+                hot = #{hot,jdbcType=TINYINT},
+            </if>
+            <if test="latest != null">
+                latest = #{latest,jdbcType=TINYINT},
+            </if>
+            <if test="recommendNum != null">
+                recommend_num = #{recommendNum,jdbcType=INTEGER},
+            </if>
+            <if test="hotNum != null">
+                hot_num = #{hotNum,jdbcType=INTEGER},
+            </if>
+            <if test="latestNum != null">
+                latest_num = #{latestNum,jdbcType=INTEGER},
+            </if>
+            <if test="choose != null">
+                choose = #{choose,jdbcType=VARCHAR},
+            </if>
+            <if test="telShow != null">
+                tel_show = #{telShow,jdbcType=TINYINT},
+            </if>
+            <if test="collaborateComp != null">
+                collaborate_comp = #{collaborateComp,jdbcType=VARCHAR},
+            </if>
+            <if test="successfulCase != null">
+                successful_case = #{successfulCase,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                intro = #{intro,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where account_id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

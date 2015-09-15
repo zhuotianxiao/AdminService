@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.ExpertMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.Expert">
+        <id column="account_id" property="id" jdbcType="INTEGER"/>
+        <result column="no" property="no" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="INTEGER"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="education" property="education" jdbcType="INTEGER"/>
+        <result column="professional_title" property="professionalTitle"
+                jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="the_unit" property="theUnit" jdbcType="VARCHAR"/>
+        <result column="trade_ids" property="tradeIds" jdbcType="VARCHAR"/>
+        <result column="trade_names" property="tradeNames" jdbcType="VARCHAR"/>
+        <result column="trade_child_ids" property="tradeChildIds"
+                jdbcType="VARCHAR"/>
+        <result column="trade_child_names" property="tradeChildNames"
+                jdbcType="VARCHAR"/>
+        <result column="area_names" property="areaNames" jdbcType="VARCHAR"/>
+        <result column="area_ids" property="areaIds" jdbcType="VARCHAR"/>
+        <result column="tags" property="tags" jdbcType="VARCHAR"/>
+        <result column="attent_num" property="attentNum" jdbcType="INTEGER"/>
+        <result column="specialty" property="specialty" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="recommend" property="recommend" jdbcType="TINYINT"/>
+        <result column="hot" property="hot" jdbcType="TINYINT"/>
+        <result column="latest" property="latest" jdbcType="TINYINT"/>
+        <result column="recommend_num" property="recommendNum" jdbcType="INTEGER"/>
+        <result column="hot_num" property="hotNum" jdbcType="INTEGER"/>
+        <result column="latest_num" property="latestNum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="valid" property="valid" jdbcType="INTEGER"/>
+        <result column="update_time" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="mark" property="mark" jdbcType="VARCHAR"/>
+        <result column="choose" property="choose" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="tel_show" property="telShow" jdbcType="TINYINT"/>
+        <result column="wechat" property="wechat" jdbcType="VARCHAR"/>
+        <result column="comp_tariff" property="compTariff" jdbcType="TINYINT"/>
+        <result column="apply_guest_expert_status" property="applyGuestExpertStatus" jdbcType="INTEGER"/>
+        <result column="avg_score" property="avgScore" jdbcType="INTEGER"/>
+        <result column="expert_type" property="expertType" jdbcType="INTEGER"/>
+        <result column="recommend_trade" property="recommendTrade" jdbcType="VARCHAR"/>
+        <association property="account" javaType="cn.fundview.modules.model.Account">
+
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="type" jdbcType="INTEGER" property="type"/>
+            <result column="auto_login_code" jdbcType="VARCHAR" property="autoLoginCode"/>
+            <result column="valid" jdbcType="TINYINT" property="valid"/>
+            <result column="is_auth" jdbcType="TINYINT" property="isAuth"/>
+            <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+            <result column="create_time" jdbcType="TIMESTAMP" property="createDate"/>
+            <result column="data_id" jdbcType="INTEGER" property="dataId"/>
+            <result column="email_checked" jdbcType="TINYINT" property="emailChecked"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="ResultMapWithBLOBs" type="cn.fundview.modules.model.Expert" extends="BaseResultMap">
+        <result column="intro" property="intro" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        e.account_id, e.no, e.name, e.logo, e.birthday, e.sex, e.addr, e.education,
+        e.professional_title,
+        e.tel,
+        e.email, e.the_unit, e.trade_ids, e.trade_names,
+        e.trade_child_ids, e.trade_child_names,
+        e.area_names,
+        e.area_ids, e.tags,
+        e.attent_num, e.specialty, e.phone, e.recommend, e.hot, e.latest,
+        e.recommend_num,
+        e.hot_num, e.latest_num, e.create_time, e.valid, e.update_time, e.mark, e.choose,
+        e.department, e.tel_show,
+        e.wechat, e.comp_tariff, e.apply_guest_expert_status,
+        e.avg_score, e.expert_type,
+        e.recommend_trade
+
+    </sql>
+    <sql id="expert_item">
+        account_id,username, name,tel,area_names,phone, e.create_time,a.valid
+    </sql>
+    <sql id="Blob_Column_List">
+        e.intro
+    </sql>
+    <select id="findAllListItem" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        a.id, a.username, a.password,a.valid,a.is_auth
+        from expert e inner join account a
+        on account_id = a.id
+    </select>
+    <select id="get" resultMap="ResultMapWithBLOBs" parameterType="cn.fundview.modules.model.Expert">
+        select *
+        from expert e ,account a where a.id = e.account_id
+        and e.account_id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getSimple" resultMap="BaseResultMap" parameterType="cn.fundview.modules.model.Expert">
+        select a.username, e.name, e.phone,a.is_auth,e.account_id,
+        e.recommend,e.recommend_num,e.hot,e.hot_num,e.latest, e.latest_num
+        from expert e ,account a where a.id = e.account_id
+        and e.account_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findAllList" resultType="cn.fundview.modules.model.Expert">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM expert e
+
+        WHERE expert
+        ORDER BY account_id
+    </select>
+    <select id="getGuestExpertStatus" resultMap="BaseResultMap" parameterType="cn.fundview.modules.model.Expert">
+
+        select
+        <include refid="Base_Column_List"></include>,
+        a.username,a.password,a.valid,a.is_auth
+        from expert e inner join account a on a.id = e.account_id
+        where e.apply_guest_expert_status = #{applyGuestExpertStatus} and a.valid = 1
+    </select>
+    <select id="countAllExpertByArea" resultType="java.util.Map">
+
+        select  count(area) as 'key' ,area as 'value' from (select substring_index(area_names,',',1) as area from expert where valid = 1 and area_names != "" ) as t_temp  group by area order by area;
+
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from expert
+        where account_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="cn.fundview.modules.model.Expert">
+        insert into expert
+        (account_id, no, name,
+        logo, birthday, sex,
+        addr, education,
+        professional_title,
+        tel, email, the_unit,
+        trade_ids, trade_names,
+        trade_child_ids,
+        trade_child_names, area_names, area_ids,
+        tags,
+        attent_num, specialty,
+        phone, recommend, hot,
+        latest, recommend_num,
+        hot_num,
+        latest_num, create_time, valid,
+        update_time, mark, choose,
+        department, tel_show, wechat,
+        comp_tariff, apply_guest_expert_status,
+        avg_score,
+        expert_type, recommend_trade, intro
+        )
+        values
+        (#{id,jdbcType=INTEGER}, #{no,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{logo,jdbcType=VARCHAR},
+        #{birthday,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},
+        #{addr,jdbcType=VARCHAR}, #{education,jdbcType=INTEGER},
+        #{professionalTitle,jdbcType=VARCHAR},
+        #{tel,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR}, #{theUnit,jdbcType=VARCHAR},
+        #{tradeIds,jdbcType=VARCHAR}, #{tradeNames,jdbcType=VARCHAR},
+        #{tradeChildIds,jdbcType=VARCHAR},
+        #{tradeChildNames,jdbcType=VARCHAR}, #{areaNames,jdbcType=VARCHAR},
+        #{areaIds,jdbcType=VARCHAR},
+        #{tags,jdbcType=VARCHAR},
+        #{attentNum,jdbcType=INTEGER}, #{specialty,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR}, #{recommend,jdbcType=TINYINT},
+        #{hot,jdbcType=TINYINT},
+        #{latest,jdbcType=TINYINT},
+        #{recommendNum,jdbcType=INTEGER}, #{hotNum,jdbcType=INTEGER},
+        #{latestNum,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP},
+        #{valid,jdbcType=INTEGER},
+        #{updateDate,jdbcType=TIMESTAMP},
+        #{mark,jdbcType=VARCHAR}, #{choose,jdbcType=VARCHAR},
+        #{department,jdbcType=VARCHAR}, #{telShow,jdbcType=TINYINT},
+        #{wechat,jdbcType=VARCHAR},
+        #{compTariff,jdbcType=TINYINT},
+        #{applyGuestExpertStatus,jdbcType=INTEGER},
+        #{avgScore,jdbcType=INTEGER},
+        #{expertType,jdbcType=INTEGER},
+        #{recommendTrade,jdbcType=VARCHAR}, #{intro,jdbcType=LONGVARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="cn.fundview.modules.model.Expert">
+        insert into expert
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="accountId != null">
+                account_id,
+            </if>
+            <if test="no != null">
+                no,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="addr != null">
+                addr,
+            </if>
+            <if test="education != null">
+                education,
+            </if>
+            <if test="professionalTitle != null">
+                professional_title,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="theUnit != null">
+                the_unit,
+            </if>
+            <if test="tradeIds != null">
+                trade_ids,
+            </if>
+            <if test="tradeNames != null">
+                trade_names,
+            </if>
+            <if test="tradeChildIds != null">
+                trade_child_ids,
+            </if>
+            <if test="tradeChildNames != null">
+                trade_child_names,
+            </if>
+            <if test="areaNames != null">
+                area_names,
+            </if>
+            <if test="areaIds != null">
+                area_ids,
+            </if>
+            <if test="tags != null">
+                tags,
+            </if>
+            <if test="attentNum != null">
+                attent_num,
+            </if>
+            <if test="specialty != null">
+                specialty,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="recommend != null">
+                recommend,
+            </if>
+            <if test="hot != null">
+                hot,
+            </if>
+            <if test="latest != null">
+                latest,
+            </if>
+            <if test="recommendNum != null">
+                recommend_num,
+            </if>
+            <if test="hotNum != null">
+                hot_num,
+            </if>
+            <if test="latestNum != null">
+                latest_num,
+            </if>
+            <if test="createDate != null">
+                create_time,
+            </if>
+            <if test="valid != null">
+                valid,
+            </if>
+            <if test="updateDate != null">
+                update_time,
+            </if>
+            <if test="mark != null">
+                mark,
+            </if>
+            <if test="choose != null">
+                choose,
+            </if>
+            <if test="department != null">
+                department,
+            </if>
+            <if test="telShow != null">
+                tel_show,
+            </if>
+            <if test="wechat != null">
+                wechat,
+            </if>
+            <if test="compTariff != null">
+                comp_tariff,
+            </if>
+            <if test="applyGuestExpertStatus != null">
+                apply_guest_expert_status,
+            </if>
+            <if test="avgScore != null">
+                avg_score,
+            </if>
+            <if test="expertType != null">
+                expert_type,
+            </if>
+            <if test="recommendTrade != null">
+                recommend_trade,
+            </if>
+            <if test="intro != null">
+                intro,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="no != null">
+                #{no,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="addr != null">
+                #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                #{education,jdbcType=INTEGER},
+            </if>
+            <if test="professionalTitle != null">
+                #{professionalTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="theUnit != null">
+                #{theUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeIds != null">
+                #{tradeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNames != null">
+                #{tradeNames,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeChildIds != null">
+                #{tradeChildIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeChildNames != null">
+                #{tradeChildNames,jdbcType=VARCHAR},
+            </if>
+            <if test="areaNames != null">
+                #{areaNames,jdbcType=VARCHAR},
+            </if>
+            <if test="areaIds != null">
+                #{areaIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tags != null">
+                #{tags,jdbcType=VARCHAR},
+            </if>
+            <if test="attentNum != null">
+                #{attentNum,jdbcType=INTEGER},
+            </if>
+            <if test="specialty != null">
+                #{specialty,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend != null">
+                #{recommend,jdbcType=TINYINT},
+            </if>
+            <if test="hot != null">
+                #{hot,jdbcType=TINYINT},
+            </if>
+            <if test="latest != null">
+                #{latest,jdbcType=TINYINT},
+            </if>
+            <if test="recommendNum != null">
+                #{recommendNum,jdbcType=INTEGER},
+            </if>
+            <if test="hotNum != null">
+                #{hotNum,jdbcType=INTEGER},
+            </if>
+            <if test="latestNum != null">
+                #{latestNum,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="valid != null">
+                #{valid,jdbcType=INTEGER},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mark != null">
+                #{mark,jdbcType=VARCHAR},
+            </if>
+            <if test="choose != null">
+                #{choose,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null">
+                #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="telShow != null">
+                #{telShow,jdbcType=TINYINT},
+            </if>
+            <if test="wechat != null">
+                #{wechat,jdbcType=VARCHAR},
+            </if>
+            <if test="compTariff != null">
+                #{compTariff,jdbcType=TINYINT},
+            </if>
+            <if test="applyGuestExpertStatus != null">
+                #{applyGuestExpertStatus,jdbcType=INTEGER},
+            </if>
+            <if test="avgScore != null">
+                #{avgScore,jdbcType=INTEGER},
+            </if>
+            <if test="expertType != null">
+                #{expertType,jdbcType=INTEGER},
+            </if>
+            <if test="recommendTrade != null">
+                #{recommendTrade,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                #{intro,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="cn.fundview.modules.model.Expert">
+        update expert
+        <set>
+            <if test="no != null">
+                no = #{no,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="addr != null">
+                addr = #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="education != null">
+                education = #{education,jdbcType=INTEGER},
+            </if>
+            <if test="professionalTitle != null">
+                professional_title =
+                #{professionalTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="theUnit != null">
+                the_unit = #{theUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeIds != null">
+                trade_ids = #{tradeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNames != null">
+                trade_names = #{tradeNames,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeChildIds != null">
+                trade_child_ids = #{tradeChildIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeChildNames != null">
+                trade_child_names = #{tradeChildNames,jdbcType=VARCHAR},
+            </if>
+            <if test="areaNames != null">
+                area_names = #{areaNames,jdbcType=VARCHAR},
+            </if>
+            <if test="areaIds != null">
+                area_ids = #{areaIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tags != null">
+                tags = #{tags,jdbcType=VARCHAR},
+            </if>
+            <if test="attentNum != null">
+                attent_num = #{attentNum,jdbcType=INTEGER},
+            </if>
+            <if test="specialty != null">
+                specialty = #{specialty,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend != null">
+                recommend = #{recommend,jdbcType=TINYINT},
+            </if>
+            <if test="hot != null">
+                hot = #{hot,jdbcType=TINYINT},
+            </if>
+            <if test="latest != null">
+                latest = #{latest,jdbcType=TINYINT},
+            </if>
+            <if test="recommendNum != null">
+                recommend_num = #{recommendNum,jdbcType=INTEGER},
+            </if>
+            <if test="hotNum != null">
+                hot_num = #{hotNum,jdbcType=INTEGER},
+            </if>
+            <if test="latestNum != null">
+                latest_num = #{latestNum,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_time = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="valid != null">
+                valid = #{valid,jdbcType=INTEGER},
+            </if>
+            <if test="updateDate != null">
+                update_time = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mark != null">
+                mark = #{mark,jdbcType=VARCHAR},
+            </if>
+            <if test="choose != null">
+                choose = #{choose,jdbcType=VARCHAR},
+            </if>
+            <if test="department != null">
+                department = #{department,jdbcType=VARCHAR},
+            </if>
+            <if test="telShow != null">
+                tel_show = #{telShow,jdbcType=TINYINT},
+            </if>
+            <if test="wechat != null">
+                wechat = #{wechat,jdbcType=VARCHAR},
+            </if>
+            <if test="compTariff != null">
+                comp_tariff = #{compTariff,jdbcType=TINYINT},
+            </if>
+            <if test="applyGuestExpertStatus != null">
+                apply_guest_expert_status =
+                #{applyGuestExpertStatus,jdbcType=INTEGER},
+            </if>
+            <if test="avgScore != null">
+                avg_score = #{avgScore,jdbcType=INTEGER},
+            </if>
+            <if test="expertType != null">
+                expert_type = #{expertType,jdbcType=INTEGER},
+            </if>
+            <if test="recommendTrade != null">
+                recommend_trade = #{recommendTrade,jdbcType=VARCHAR},
+            </if>
+            <if test="choose != null">
+                choose = #{choose,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                intro = #{intro,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where account_id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.fundview.modules.model.Expert">
+        update
+        expert
+        set no = #{no,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        logo = #{logo,jdbcType=VARCHAR},
+        birthday =
+        #{birthday,jdbcType=VARCHAR},
+        sex = #{sex,jdbcType=INTEGER},
+        addr =
+        #{addr,jdbcType=VARCHAR},
+        education = #{education,jdbcType=INTEGER},
+        professional_title = #{professionalTitle,jdbcType=VARCHAR},
+        tel =
+        #{tel,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        the_unit =
+        #{theUnit,jdbcType=VARCHAR},
+        trade_ids = #{tradeIds,jdbcType=VARCHAR},
+        trade_names = #{tradeNames,jdbcType=VARCHAR},
+        trade_child_ids =
+        #{tradeChildIds,jdbcType=VARCHAR},
+        trade_child_names =
+        #{tradeChildNames,jdbcType=VARCHAR},
+        area_names =
+        #{areaNames,jdbcType=VARCHAR},
+        area_ids = #{areaIds,jdbcType=VARCHAR},
+        tags = #{tags,jdbcType=VARCHAR},
+        attent_num =
+        #{attentNum,jdbcType=INTEGER},
+        specialty =
+        #{specialty,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        recommend = #{recommend,jdbcType=TINYINT},
+        hot =
+        #{hot,jdbcType=TINYINT},
+        latest = #{latest,jdbcType=TINYINT},
+        recommend_num = #{recommendNum,jdbcType=INTEGER},
+        hot_num =
+        #{hotNum,jdbcType=INTEGER},
+        latest_num = #{latestNum,jdbcType=INTEGER},
+        create_time = #{createDate,jdbcType=TIMESTAMP},
+        valid =
+        #{valid,jdbcType=INTEGER},
+        update_time =
+        #{updateDate,jdbcType=TIMESTAMP},
+        mark = #{mark,jdbcType=VARCHAR},
+        choose = #{choose,jdbcType=VARCHAR},
+        department =
+        #{department,jdbcType=VARCHAR},
+        tel_show = #{telShow,jdbcType=TINYINT},
+        wechat = #{wechat,jdbcType=VARCHAR},
+        comp_tariff =
+        #{compTariff,jdbcType=TINYINT},
+        apply_guest_expert_status =
+        #{applyGuestExpertStatus,jdbcType=INTEGER},
+        avg_score =
+        #{avgScore,jdbcType=INTEGER},
+        expert_type =
+        #{expertType,jdbcType=INTEGER},
+        recommend_trade =
+        #{recommendTrade,jdbcType=VARCHAR},
+        intro =
+        #{intro,jdbcType=LONGVARCHAR}
+        where account_id =
+        #{id,jdbcType=INTEGER}
+    </update>
+
+
+</mapper>

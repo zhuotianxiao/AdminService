@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.PayRemittanceMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.PayRemittance">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="pay_id" property="payId" jdbcType="INTEGER"/>
+        <result column="pay_code" property="payCode" jdbcType="VARCHAR"/>
+        <result column="pay_code_phone" property="payCodePhone" jdbcType="VARCHAR"/>
+        <result column="pay_way" property="payWay" jdbcType="VARCHAR"/>
+        <result column="pay_date" property="payDate" jdbcType="TIMESTAMP"/>
+        <result column="bank_running_number" property="bankRunningNumber" jdbcType="VARCHAR"/>
+        <result column="pay_type" property="payType" jdbcType="VARCHAR"/>
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR"/>
+        <result column="money" property="money" jdbcType="DOUBLE"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="real_pay_date" property="realPayDate" jdbcType="TIMESTAMP"/>
+        <association property="payMain" javaType="cn.fundview.modules.model.PayMain">
+
+            <id column="pid" property="id" jdbcType="INTEGER"/>
+            <result column="pay_type" property="payType" jdbcType="INTEGER"/>
+            <result column="order_id" property="orderId" jdbcType="INTEGER"/>
+            <result column="order_name" property="orderName" jdbcType="VARCHAR"/>
+            <result column="order_type" property="orderType" jdbcType="INTEGER"/>
+            <result column="order_money" property="orderMoney" jdbcType="DOUBLE"/>
+            <result column="ppay_date" property="payDate" jdbcType="TIMESTAMP"/>
+            <result column="order_desc" property="orderDesc" jdbcType="VARCHAR"/>
+            <result column="pay_status" property="payStatus" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, pay_id, pay_code, pay_code_phone, pay_way, pay_date, bank_running_number, pay_type,
+        bank_name, money, remarks, real_pay_date
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_pay_remittance
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="findByPayCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+
+        SELECT
+            pr.*,
+            pm.id as pid, pm.pay_type, pm.order_id, pm.order_name, pm.order_type, pm.order_money, pm.pay_date as ppay_date, pm.order_desc,
+    pm.pay_status
+        FROM t_pay_remittance pr, t_pay_main pm
+        WHERE pr.pay_id = pm.id AND pr.pay_code LIKE CONCAT('%', #{code}, '%');
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM t_pay_remittance
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.fundview.modules.model.PayRemittance">
+        INSERT INTO t_pay_remittance (id, pay_id, pay_code,
+                                      pay_code_phone, pay_way, pay_date,
+                                      bank_running_number, pay_type, bank_name,
+                                      money, remarks, real_pay_date
+        )
+        VALUES (#{id,jdbcType=INTEGER}, #{payId,jdbcType=INTEGER}, #{payCode,jdbcType=VARCHAR},
+                #{payCodePhone,jdbcType=VARCHAR}, #{payWay,jdbcType=VARCHAR}, #{payDate,jdbcType=TIMESTAMP},
+                #{bankRunningNumber,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR},
+                #{money,jdbcType=DOUBLE}, #{remarks,jdbcType=VARCHAR}, #{realPayDate,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="cn.fundview.modules.model.PayRemittance">
+        insert into t_pay_remittance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="payId != null">
+                pay_id,
+            </if>
+            <if test="payCode != null">
+                pay_code,
+            </if>
+            <if test="payCodePhone != null">
+                pay_code_phone,
+            </if>
+            <if test="payWay != null">
+                pay_way,
+            </if>
+            <if test="payDate != null">
+                pay_date,
+            </if>
+            <if test="bankRunningNumber != null">
+                bank_running_number,
+            </if>
+            <if test="payType != null">
+                pay_type,
+            </if>
+            <if test="bankName != null">
+                bank_name,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="realPayDate != null">
+                real_pay_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="payId != null">
+                #{payId,jdbcType=INTEGER},
+            </if>
+            <if test="payCode != null">
+                #{payCode,jdbcType=VARCHAR},
+            </if>
+            <if test="payCodePhone != null">
+                #{payCodePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="payWay != null">
+                #{payWay,jdbcType=VARCHAR},
+            </if>
+            <if test="payDate != null">
+                #{payDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bankRunningNumber != null">
+                #{bankRunningNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="payType != null">
+                #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null">
+                #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DOUBLE},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="realPayDate != null">
+                #{realPayDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.modules.model.PayRemittance">
+        update t_pay_remittance
+        <set>
+            <if test="payId != null">
+                pay_id = #{payId,jdbcType=INTEGER},
+            </if>
+            <if test="payCode != null">
+                pay_code = #{payCode,jdbcType=VARCHAR},
+            </if>
+            <if test="payCodePhone != null">
+                pay_code_phone = #{payCodePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="payWay != null">
+                pay_way = #{payWay,jdbcType=VARCHAR},
+            </if>
+            <if test="payDate != null">
+                pay_date = #{payDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="bankRunningNumber != null">
+                bank_running_number = #{bankRunningNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="payType != null">
+                pay_type = #{payType,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null">
+                bank_name = #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DOUBLE},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="realPayDate != null">
+                real_pay_date = #{realPayDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.fundview.modules.model.PayRemittance">
+        UPDATE t_pay_remittance
+        SET pay_id              = #{payId,jdbcType=INTEGER},
+            pay_code            = #{payCode,jdbcType=VARCHAR},
+            pay_code_phone      = #{payCodePhone,jdbcType=VARCHAR},
+            pay_way             = #{payWay,jdbcType=VARCHAR},
+            pay_date            = #{payDate,jdbcType=TIMESTAMP},
+            bank_running_number = #{bankRunningNumber,jdbcType=VARCHAR},
+            pay_type            = #{payType,jdbcType=VARCHAR},
+            bank_name           = #{bankName,jdbcType=VARCHAR},
+            money               = #{money,jdbcType=DOUBLE},
+            remarks             = #{remarks,jdbcType=VARCHAR},
+            real_pay_date       = #{realPayDate,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

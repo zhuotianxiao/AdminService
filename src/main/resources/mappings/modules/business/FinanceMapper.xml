@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.FinanceMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.Finance">
+        <id column="account_id" property="id"/>
+        <result column="link_man" property="linkMan" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="website" property="website" jdbcType="VARCHAR"/>
+        <result column="area_names" property="areaNames" jdbcType="VARCHAR"/>
+        <result column="area_ids" property="areaIds" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createDate" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateDate" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="tel_show" property="telShow" jdbcType="TINYINT"/>
+        <result column="org_code" property="orgCode" jdbcType="VARCHAR"/>
+        <result column="business_licence" property="businessLicence" jdbcType="VARCHAR"/>
+        <result column="finance_auth" property="financeAuth" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="choose" property="choose" jdbcType="VARCHAR"/>
+        <association property="account" javaType="cn.fundview.modules.model.Account">
+
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="type" jdbcType="INTEGER" property="type"/>
+            <result column="auto_login_code" jdbcType="VARCHAR" property="autoLoginCode"/>
+            <result column="valid" jdbcType="TINYINT" property="valid"/>
+            <result column="is_auth" jdbcType="TINYINT" property="isAuth"/>
+            <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+            <result column="create_time" jdbcType="TIMESTAMP" property="createDate"/>
+            <result column="data_id" jdbcType="INTEGER" property="dataId"/>
+            <result column="email_checked" jdbcType="TINYINT" property="emailChecked"/>
+        </association>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="cn.fundview.modules.model.Finance" extends="BaseResultMap">
+        <result column="product_desc" property="productDesc" jdbcType="LONGVARCHAR"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        f.account_id, f.link_man, f.name, f.logo, f.type, f.intro, f.tel, f.addr, f.email, f.website, f.area_names,
+        f.area_ids, f.create_time, f.update_time, f.tel_show, f.org_code, f.business_licence, f.finance_auth,
+        f.phone,f.choose
+    </sql>
+    <sql id="Blob_Column_List">
+    product_desc,intro
+    </sql>
+    <select id="get" resultMap="ResultMapWithBLOBs" parameterType="cn.fundview.modules.model.Finance">
+    select 
+  		 *
+    from finance f,account a
+    where f.account_id = a.id and  account_id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>,
+        a.username,a.password,a.valid,a.is_auth
+        FROM finance f inner join account a
+        on f.account_id = a.id
+        ORDER BY account_id
+    </select>
+    <update id="update" parameterType="cn.fundview.modules.model.Finance">
+        update finance
+        <set>
+            <if test="linkMan != null">
+                link_man = #{linkMan,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="intro != null">
+                intro = #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="addr != null">
+                addr = #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                website = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="areaNames != null">
+                area_names = #{areaNames,jdbcType=VARCHAR},
+            </if>
+            <if test="areaIds != null">
+                area_ids = #{areaIds,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_time = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_time = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="telShow != null">
+                tel_show = #{telShow,jdbcType=TINYINT},
+            </if>
+            <if test="orgCode != null">
+                org_code = #{orgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="businessLicence != null">
+                business_licence = #{businessLicence,jdbcType=VARCHAR},
+            </if>
+            <if test="financeAuth != null">
+                finance_auth = #{financeAuth,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="productDesc != null">
+                product_desc = #{productDesc,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="financeAuth != null">
+                finance_auth = #{financeAuth,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where account_id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getUnCheckFinanceList" resultMap="BaseResultMap" parameterType="cn.fundview.modules.model.Finance">
+        select
+       <include refid="Base_Column_List"></include>,
+        a.username,a.password,a.valid,a.is_auth
+        from finance f inner join account a on a.id = f.account_id
+        where f.finance_auth = #{financeAuth} and a.valid = 1
+    </select>
+
+</mapper>

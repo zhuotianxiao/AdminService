@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.NewsMapper" >
+  <resultMap id="BaseResultMap" type="cn.fundview.modules.model.News" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP" />
+    <result column="publisher_id" property="publisherId" jdbcType="VARCHAR" />
+    <result column="news_sort" property="newsSort" jdbcType="INTEGER" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="recommend" property="recommend" jdbcType="TINYINT" />
+    <result column="hot" property="hot" jdbcType="TINYINT" />
+    <result column="latest" property="latest" jdbcType="TINYINT" />
+    <result column="recommend_num" property="recommendNum" jdbcType="INTEGER" />
+    <result column="latest_num" property="latestNum" jdbcType="INTEGER" />
+    <result column="hot_num" property="hotNum" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.fundview.modules.model.News" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, intro, publish_date, publisher_id, news_sort, img_url, source, tags, recommend, 
+    hot, latest, recommend_num, latest_num, hot_num
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from news
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from news
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from news
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.fundview.modules.model.News" >
+    insert into news (id, title, intro, 
+      publish_date, publisher_id, news_sort, 
+      img_url, source, tags, 
+      recommend, hot, latest, 
+      recommend_num, latest_num, hot_num, 
+      content)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, 
+      #{publishDate,jdbcType=TIMESTAMP}, #{publisherId,jdbcType=VARCHAR}, #{newsSort,jdbcType=INTEGER},
+      #{imgUrl,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, 
+      #{recommend,jdbcType=TINYINT}, #{hot,jdbcType=TINYINT}, #{latest,jdbcType=TINYINT}, 
+      #{recommendNum,jdbcType=INTEGER}, #{latestNum,jdbcType=INTEGER}, #{hotNum,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fundview.modules.model.News" >
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+      <if test="publishDate != null" >
+        publish_date,
+      </if>
+      <if test="publisherId != null" >
+        publisher_id,
+      </if>
+      <if test="newsSort != null" >
+        news_sort,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="hot != null" >
+        hot,
+      </if>
+      <if test="latest != null" >
+        latest,
+      </if>
+      <if test="recommendNum != null" >
+        recommend_num,
+      </if>
+      <if test="latestNum != null" >
+        latest_num,
+      </if>
+      <if test="hotNum != null" >
+        hot_num,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null" >
+        #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publisherId != null" >
+        #{publisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="newsSort != null" >
+        #{newsSort,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=TINYINT},
+      </if>
+      <if test="hot != null" >
+        #{hot,jdbcType=TINYINT},
+      </if>
+      <if test="latest != null" >
+        #{latest,jdbcType=TINYINT},
+      </if>
+      <if test="recommendNum != null" >
+        #{recommendNum,jdbcType=INTEGER},
+      </if>
+      <if test="latestNum != null" >
+        #{latestNum,jdbcType=INTEGER},
+      </if>
+      <if test="hotNum != null" >
+        #{hotNum,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.modules.model.News" >
+    update news
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="publishDate != null" >
+        publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publisherId != null" >
+        publisher_id = #{publisherId,jdbcType=VARCHAR},
+      </if>
+      <if test="newsSort != null" >
+        news_sort = #{newsSort,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=TINYINT},
+      </if>
+      <if test="hot != null" >
+        hot = #{hot,jdbcType=TINYINT},
+      </if>
+      <if test="latest != null" >
+        latest = #{latest,jdbcType=TINYINT},
+      </if>
+      <if test="recommendNum != null" >
+        recommend_num = #{recommendNum,jdbcType=INTEGER},
+      </if>
+      <if test="latestNum != null" >
+        latest_num = #{latestNum,jdbcType=INTEGER},
+      </if>
+      <if test="hotNum != null" >
+        hot_num = #{hotNum,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.fundview.modules.model.News" >
+    update news
+    set title = #{title,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      publisher_id = #{publisherId,jdbcType=VARCHAR},
+      news_sort = #{newsSort,jdbcType=INTEGER},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=TINYINT},
+      hot = #{hot,jdbcType=TINYINT},
+      latest = #{latest,jdbcType=TINYINT},
+      recommend_num = #{recommendNum,jdbcType=INTEGER},
+      latest_num = #{latestNum,jdbcType=INTEGER},
+      hot_num = #{hotNum,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fundview.modules.model.News" >
+    update news
+    set title = #{title,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      publish_date = #{publishDate,jdbcType=TIMESTAMP},
+      publisher_id = #{publisherId,jdbcType=VARCHAR},
+      news_sort = #{newsSort,jdbcType=INTEGER},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=TINYINT},
+      hot = #{hot,jdbcType=TINYINT},
+      latest = #{latest,jdbcType=TINYINT},
+      recommend_num = #{recommendNum,jdbcType=INTEGER},
+      latest_num = #{latestNum,jdbcType=INTEGER},
+      hot_num = #{hotNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

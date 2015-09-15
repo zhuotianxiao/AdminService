@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.ReportMapper" >
+  <resultMap id="BaseResultMap" type="cn.fundview.modules.model.Report" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="problem_manifest" property="problemManifest" jdbcType="VARCHAR" />
+    <result column="analyse" property="analyse" jdbcType="VARCHAR" />
+    <result column="adverse" property="adverse" jdbcType="VARCHAR" />
+    <result column="doc_path" property="docPath" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, problem_manifest, analyse, adverse, doc_path, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_report
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_report
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.fundview.modules.model.Report" >
+    insert into t_report (id, problem_manifest, analyse, 
+      adverse, doc_path, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{problemManifest,jdbcType=VARCHAR}, #{analyse,jdbcType=VARCHAR}, 
+      #{adverse,jdbcType=VARCHAR}, #{docPath,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fundview.modules.model.Report" >
+    insert into t_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="problemManifest != null" >
+        problem_manifest,
+      </if>
+      <if test="analyse != null" >
+        analyse,
+      </if>
+      <if test="adverse != null" >
+        adverse,
+      </if>
+      <if test="docPath != null" >
+        doc_path,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="problemManifest != null" >
+        #{problemManifest,jdbcType=VARCHAR},
+      </if>
+      <if test="analyse != null" >
+        #{analyse,jdbcType=VARCHAR},
+      </if>
+      <if test="adverse != null" >
+        #{adverse,jdbcType=VARCHAR},
+      </if>
+      <if test="docPath != null" >
+        #{docPath,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.modules.model.Report" >
+    update t_report
+    <set >
+      <if test="problemManifest != null" >
+        problem_manifest = #{problemManifest,jdbcType=VARCHAR},
+      </if>
+      <if test="analyse != null" >
+        analyse = #{analyse,jdbcType=VARCHAR},
+      </if>
+      <if test="adverse != null" >
+        adverse = #{adverse,jdbcType=VARCHAR},
+      </if>
+      <if test="docPath != null" >
+        doc_path = #{docPath,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fundview.modules.model.Report" >
+    update t_report
+    set problem_manifest = #{problemManifest,jdbcType=VARCHAR},
+      analyse = #{analyse,jdbcType=VARCHAR},
+      adverse = #{adverse,jdbcType=VARCHAR},
+      doc_path = #{docPath,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

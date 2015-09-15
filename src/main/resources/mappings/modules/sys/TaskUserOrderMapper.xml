@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.setting.dao.TaskUserOrderMapper" >
+  <resultMap id="BaseResultMap" type="cn.fundview.setting.model.TaskUserOrder" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="consumer" property="consumer" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithUser" type="cn.fundview.setting.model.TaskUserOrder" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <association column="consumer" property="user" select="cn.fundview.setting.dao.UserDao.get"></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, task_id, consumer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_task_user_order
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTaskId" resultMap="ResultMapWithUser">
+    select
+    <include refid="Base_Column_List" />
+    from t_task_user_order
+    where task_id = #{taskId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_task_user_order
+    where consumer = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_task_user_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.fundview.setting.model.TaskUserOrder" >
+    insert into t_task_user_order (id, task_id, consumer
+      )
+    values (#{id,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{consumer,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fundview.setting.model.TaskUserOrder" >
+    insert into t_task_user_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="consumer != null" >
+        consumer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="consumer != null" >
+        #{consumer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertList" parameterType="list">
+    insert into t_task_user_order (id,task_id,consumer)
+    values
+    <foreach collection="list" item="order" separator=",">
+      (#{order.id},
+      #{order.taskId},
+      #{order.consumer})
+    </foreach>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.setting.model.TaskUserOrder" >
+    update t_task_user_order
+    <set >
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="consumer != null" >
+        consumer = #{consumer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fundview.setting.model.TaskUserOrder" >
+    update t_task_user_order
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      consumer = #{consumer,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

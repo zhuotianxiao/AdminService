@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.setting.dao.TaskOfficeOrderMapper" >
+  <resultMap id="BaseResultMap" type="cn.fundview.setting.model.TaskOfficeOrder" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="first_agent" property="firstAgent" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithOffice" type="cn.fundview.setting.model.TaskOfficeOrder" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <association column="first_agent" property="office" select="cn.fundview.setting.dao.OfficeDao.get"></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, task_id, first_agent
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_task_office_order
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTaskId" resultMap="ResultMapWithOffice">
+    select
+    <include refid="Base_Column_List" />
+    from t_task_office_order
+    where task_id = #{taskId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_task_office_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.fundview.setting.model.TaskOfficeOrder" >
+    insert into t_task_office_order (id, task_id, first_agent
+      )
+    values (#{id,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, #{firstAgent,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.fundview.setting.model.TaskOfficeOrder" >
+    insert into t_task_office_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="firstAgent != null" >
+        first_agent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstAgent != null" >
+        #{firstAgent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertList" parameterType="list">
+    insert into t_task_office_order (id, task_id, first_agent)
+    values
+    <foreach collection="list" item="order" separator=",">
+      (#{order.id},
+      #{order.taskId},
+      #{order.firstAgent})
+    </foreach>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.setting.model.TaskOfficeOrder" >
+    update t_task_office_order
+    <set >
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstAgent != null" >
+        first_agent = #{firstAgent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.fundview.setting.model.TaskOfficeOrder" >
+    update t_task_office_order
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      first_agent = #{firstAgent,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

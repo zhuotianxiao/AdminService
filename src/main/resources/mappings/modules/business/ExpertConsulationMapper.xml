@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.ExpertConsulationMapper" >
+  <resultMap id="BaseResultMap" type="cn.fundview.modules.model.ExpertConsulation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="is_phone_consulation" property="isPhoneConsulation" jdbcType="TINYINT" />
+    <result column="phone_consulation_price" property="phoneConsulationPrice" jdbcType="DOUBLE" />
+    <result column="is_scene_consulation" property="isSceneConsulation" jdbcType="TINYINT" />
+    <result column="scene_consulation_price" property="sceneConsulationPrice" jdbcType="DOUBLE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, is_phone_consulation, phone_consulation_price, is_scene_consulation, scene_consulation_price, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.fundview.modules.model.ExpertConsulation">
+    select
+    <include refid="Base_Column_List" />
+    from t_expert_consulation_service
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+</mapper>

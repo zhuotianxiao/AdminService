@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fundview.modules.dao.AccountMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.Account">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="auto_login_code" jdbcType="VARCHAR" property="autoLoginCode"/>
+        <result column="valid" jdbcType="TINYINT" property="valid"/>
+        <result column="is_auth" jdbcType="TINYINT" property="isAuth"/>
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="data_id" jdbcType="INTEGER" property="dataId"/>
+        <result column="email_checked" jdbcType="TINYINT" property="emailChecked"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, username, password, type, auto_login_code, valid, is_auth, last_login_time, create_time,
+        data_id, email_checked
+    </sql>
+    <!-- <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from account
+      where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+      delete from account
+      where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.fundview.modules.model.Account">
+      insert into account (id, username, password,
+        type, auto_login_code, valid,
+        is_auth, last_login_time, create_time,
+        data_id, email_checked)
+      values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{type,jdbcType=INTEGER}, #{autoLoginCode,jdbcType=VARCHAR}, #{valid,jdbcType=TINYINT},
+        #{isAuth,jdbcType=TINYINT}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+        #{dataId,jdbcType=INTEGER}, #{emailChecked,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.fundview.modules.model.Account">
+      insert into account
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+          id,
+        </if>
+        <if test="username != null">
+          username,
+        </if>
+        <if test="password != null">
+          password,
+        </if>
+        <if test="type != null">
+          type,
+        </if>
+        <if test="autoLoginCode != null">
+          auto_login_code,
+        </if>
+        <if test="valid != null">
+          valid,
+        </if>
+        <if test="isAuth != null">
+          is_auth,
+        </if>
+        <if test="lastLoginTime != null">
+          last_login_time,
+        </if>
+        <if test="createTime != null">
+          create_time,
+        </if>
+        <if test="dataId != null">
+          data_id,
+        </if>
+        <if test="emailChecked != null">
+          email_checked,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+          #{id,jdbcType=INTEGER},
+        </if>
+        <if test="username != null">
+          #{username,jdbcType=VARCHAR},
+        </if>
+        <if test="password != null">
+          #{password,jdbcType=VARCHAR},
+        </if>
+        <if test="type != null">
+          #{type,jdbcType=INTEGER},
+        </if>
+        <if test="autoLoginCode != null">
+          #{autoLoginCode,jdbcType=VARCHAR},
+        </if>
+        <if test="valid != null">
+          #{valid,jdbcType=TINYINT},
+        </if>
+        <if test="isAuth != null">
+          #{isAuth,jdbcType=TINYINT},
+        </if>
+        <if test="lastLoginTime != null">
+          #{lastLoginTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="createTime != null">
+          #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="dataId != null">
+          #{dataId,jdbcType=INTEGER},
+        </if>
+        <if test="emailChecked != null">
+          #{emailChecked,jdbcType=TINYINT},
+        </if>
+      </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.modules.model.Account">
+      update account
+      <set>
+        <if test="username != null">
+          username = #{username,jdbcType=VARCHAR},
+        </if>
+        <if test="password != null">
+          password = #{password,jdbcType=VARCHAR},
+        </if>
+        <if test="type != null">
+          type = #{type,jdbcType=INTEGER},
+        </if>
+        <if test="autoLoginCode != null">
+          auto_login_code = #{autoLoginCode,jdbcType=VARCHAR},
+        </if>
+        <if test="valid != null">
+          valid = #{valid,jdbcType=TINYINT},
+        </if>
+        <if test="isAuth != null">
+          is_auth = #{isAuth,jdbcType=TINYINT},
+        </if>
+        <if test="lastLoginTime != null">
+          last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="createTime != null">
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="dataId != null">
+          data_id = #{dataId,jdbcType=INTEGER},
+        </if>
+        <if test="emailChecked != null">
+          email_checked = #{emailChecked,jdbcType=TINYINT},
+        </if>
+      </set>
+      where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.fundview.modules.model.Account">
+      update account
+      set username = #{username,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        type = #{type,jdbcType=INTEGER},
+        auto_login_code = #{autoLoginCode,jdbcType=VARCHAR},
+        valid = #{valid,jdbcType=TINYINT},
+        is_auth = #{isAuth,jdbcType=TINYINT},
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        data_id = #{dataId,jdbcType=INTEGER},
+        email_checked = #{emailChecked,jdbcType=TINYINT}
+      where id = #{id,jdbcType=INTEGER}
+    </update>
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.Account">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="username" jdbcType="VARCHAR" property="username" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="type" jdbcType="INTEGER" property="type" />
+      <result column="auto_login_code" jdbcType="VARCHAR" property="autoLoginCode" />
+      <result column="valid" jdbcType="TINYINT" property="valid" />
+      <result column="is_auth" jdbcType="TINYINT" property="isAuth" />
+      <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="data_id" jdbcType="INTEGER" property="dataId" />
+      <result column="email_checked" jdbcType="TINYINT" property="emailChecked" />
+    </resultMap>
+    <sql id="Base_Column_List">
+      id, username, password, type, auto_login_code, valid, is_auth, last_login_time, create_time,
+      data_id, email_checked
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from account
+      where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+      delete from account
+      where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.fundview.modules.model.Account">
+      insert into account (id, username, password,
+        type, auto_login_code, valid,
+        is_auth, last_login_time, create_time,
+        data_id, email_checked)
+      values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{type,jdbcType=INTEGER}, #{autoLoginCode,jdbcType=VARCHAR}, #{valid,jdbcType=TINYINT},
+        #{isAuth,jdbcType=TINYINT}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+        #{dataId,jdbcType=INTEGER}, #{emailChecked,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.fundview.modules.model.Account">
+      insert into account
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+          id,
+        </if>
+        <if test="username != null">
+          username,
+        </if>
+        <if test="password != null">
+          password,
+        </if>
+        <if test="type != null">
+          type,
+        </if>
+        <if test="autoLoginCode != null">
+          auto_login_code,
+        </if>
+        <if test="valid != null">
+          valid,
+        </if>
+        <if test="isAuth != null">
+          is_auth,
+        </if>
+        <if test="lastLoginTime != null">
+          last_login_time,
+        </if>
+        <if test="createTime != null">
+          create_time,
+        </if>
+        <if test="dataId != null">
+          data_id,
+        </if>
+        <if test="emailChecked != null">
+          email_checked,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="id != null">
+          #{id,jdbcType=INTEGER},
+        </if>
+        <if test="username != null">
+          #{username,jdbcType=VARCHAR},
+        </if>
+        <if test="password != null">
+          #{password,jdbcType=VARCHAR},
+        </if>
+        <if test="type != null">
+          #{type,jdbcType=INTEGER},
+        </if>
+        <if test="autoLoginCode != null">
+          #{autoLoginCode,jdbcType=VARCHAR},
+        </if>
+        <if test="valid != null">
+          #{valid,jdbcType=TINYINT},
+        </if>
+        <if test="isAuth != null">
+          #{isAuth,jdbcType=TINYINT},
+        </if>
+        <if test="lastLoginTime != null">
+          #{lastLoginTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="createTime != null">
+          #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="dataId != null">
+          #{dataId,jdbcType=INTEGER},
+        </if>
+        <if test="emailChecked != null">
+          #{emailChecked,jdbcType=TINYINT},
+        </if>
+      </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.modules.model.Account">
+      update account
+      <set>
+        <if test="username != null">
+          username = #{username,jdbcType=VARCHAR},
+        </if>
+        <if test="password != null">
+          password = #{password,jdbcType=VARCHAR},
+        </if>
+        <if test="type != null">
+          type = #{type,jdbcType=INTEGER},
+        </if>
+        <if test="autoLoginCode != null">
+          auto_login_code = #{autoLoginCode,jdbcType=VARCHAR},
+        </if>
+        <if test="valid != null">
+          valid = #{valid,jdbcType=TINYINT},
+        </if>
+        <if test="isAuth != null">
+          is_auth = #{isAuth,jdbcType=TINYINT},
+        </if>
+        <if test="lastLoginTime != null">
+          last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="createTime != null">
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="dataId != null">
+          data_id = #{dataId,jdbcType=INTEGER},
+        </if>
+        <if test="emailChecked != null">
+          email_checked = #{emailChecked,jdbcType=TINYINT},
+        </if>
+      </set>
+      where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.fundview.modules.model.Account">
+      update account
+      set username = #{username,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
+        type = #{type,jdbcType=INTEGER},
+        auto_login_code = #{autoLoginCode,jdbcType=VARCHAR},
+        valid = #{valid,jdbcType=TINYINT},
+        is_auth = #{isAuth,jdbcType=TINYINT},
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        data_id = #{dataId,jdbcType=INTEGER},
+        email_checked = #{emailChecked,jdbcType=TINYINT}
+      where id = #{id,jdbcType=INTEGER}
+    </update>
+     -->
+    <update id="update" parameterType="cn.fundview.modules.model.Account">
+        update account
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="autoLoginCode != null">
+                auto_login_code = #{autoLoginCode,jdbcType=VARCHAR},
+            </if>
+            <if test="valid != null">
+                valid = #{valid,jdbcType=TINYINT},
+            </if>
+            <if test="isAuth != null">
+                is_auth = #{isAuth,jdbcType=TINYINT},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createDate != null">
+                create_time = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dataId != null">
+                data_id = #{dataId,jdbcType=INTEGER},
+            </if>
+            <if test="emailChecked != null">
+                email_checked = #{emailChecked,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="valid" parameterType="cn.fundview.modules.model.Account">
+        update account
+        set valid = #{valid,jdbcType=TINYINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="get" resultType="cn.fundview.modules.model.Account" parameterType="cn.fundview.modules.model.Account">
+        select
+        <include refid="Base_Column_List"/>
+        from account
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+</mapper>

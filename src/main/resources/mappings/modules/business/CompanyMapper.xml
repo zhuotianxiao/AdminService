@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.CompanyMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.Company">
+        <id column="account_id" property="accountId" jdbcType="INTEGER"/>
+        <result column="no" property="no" jdbcType="VARCHAR"/>
+        <result column="logo" property="logo" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="addr" property="addr" jdbcType="VARCHAR"/>
+        <result column="area_names" property="areaNames" jdbcType="VARCHAR"/>
+        <result column="area_ids" property="areaIds" jdbcType="VARCHAR"/>
+        <result column="reg_capital" property="regCapital" jdbcType="REAL"/>
+        <result column="reg_time" property="regTime" jdbcType="VARCHAR"/>
+        <result column="reg_type" property="regType" jdbcType="INTEGER"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="website" property="website" jdbcType="VARCHAR"/>
+        <result column="tags" property="tags" jdbcType="VARCHAR"/>
+        <result column="trade_ids" property="tradeIds" jdbcType="VARCHAR"/>
+        <result column="trade_names" property="tradeNames" jdbcType="VARCHAR"/>
+        <result column="attent_num" property="attentNum" jdbcType="INTEGER"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="linkman" property="linkman" jdbcType="VARCHAR"/>
+        <result column="recommend" property="recommend" jdbcType="TINYINT"/>
+        <result column="hot" property="hot" jdbcType="TINYINT"/>
+        <result column="latest" property="latest" jdbcType="TINYINT"/>
+        <result column="recommend_num" property="recommendNum" jdbcType="INTEGER"/>
+        <result column="hot_num" property="hotNum" jdbcType="INTEGER"/>
+        <result column="latest_num" property="latestNum" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="ltqy_type" property="ltqyType" jdbcType="VARCHAR"/>
+        <result column="employees" property="employees" jdbcType="VARCHAR"/>
+        <result column="main_products" property="mainProducts" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="INTEGER"/>
+        <result column="trade_child_ids" property="tradeChildIds" jdbcType="VARCHAR"/>
+        <result column="trade_child_names" property="tradeChildNames" jdbcType="VARCHAR"/>
+        <result column="recommend_trade" property="recommendTrade" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="mark" property="mark" jdbcType="VARCHAR"/>
+        <result column="org_code" property="orgCode" jdbcType="VARCHAR"/>
+        <result column="business_licence" property="businessLicence" jdbcType="VARCHAR"/>
+        <result column="comp_auth" property="compAuth" jdbcType="INTEGER"/>
+        <result column="choose" property="choose" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+        <result column="tel_show" property="telShow" jdbcType="TINYINT"/>
+        <result column="raw_materis" property="rawMateris" jdbcType="VARCHAR"/>
+        <association property="account" javaType="cn.fundview.modules.model.Account">
+
+            <id column="id" jdbcType="INTEGER" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="type" jdbcType="INTEGER" property="type"/>
+            <result column="auto_login_code" jdbcType="VARCHAR" property="autoLoginCode"/>
+            <result column="valid" jdbcType="TINYINT" property="valid"/>
+            <result column="is_auth" jdbcType="TINYINT" property="isAuth"/>
+            <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+            <result column="create_time" jdbcType="TIMESTAMP" property="createDate"/>
+            <result column="data_id" jdbcType="INTEGER" property="dataId"/>
+            <result column="email_checked" jdbcType="TINYINT" property="emailChecked"/>
+        </association>
+    </resultMap>
+    <resultMap id="BlobResultMap" extends="BaseResultMap" type="cn.fundview.modules.model.Company">
+
+        <result column="info" jdbcType="VARCHAR" property="info"/>
+        <result column="service" jdbcType="VARCHAR" property="service"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    c.account_id,  c.no,  c.logo,  c.name,   c.area_names,   c.reg_time,  c.reg_type,
+     c.tel,   c.trade_names,  c.attent_num,  c.phone,  c.linkman, c.recommend,  c.hot,
+     c.latest,  c.recommend_num,  c.hot_num,  c.latest_num,  c.create_time,business_licence,
+     c.ltqy_type,  c.employees,  c.valid,  c.trade_child_ids,  c.trade_child_names,  c.recommend_trade,
+     c.update_time, c.org_code,   c.comp_auth,  c.type, c.tel_show
+  </sql>
+    <sql id="Blob_Column_List">
+   service, info
+  </sql>
+    <select id="getList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        a.username,a.valid,a.is_auth
+        from company c inner join account a on c.account_id = a.id
+    </select>
+    <select id="get" resultMap="BlobResultMap">
+        select *
+        from company c, account a
+        where c.account_id = a.id and account_id = #{accountId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getSimple" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>,
+        a.username,a.valid,a.is_auth
+        from company c inner join account a on c.account_id = a.id
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getUnCheckCompList" resultMap="BaseResultMap" parameterType="cn.fundview.modules.model.Company">
+        select
+        <include refid="Base_Column_List"/>,
+        a.username,a.valid,a.is_auth
+        from company c inner join account a on c.account_id = a.id
+        where c.comp_auth = #{compAuth} and c.valid = 1 and a.valid = 1
+    </select>
+    <select id="countAllCompByArea" resultType="java.util.Map">
+
+        select  count(area) as 'key' ,area as 'value' from (select substring_index(area_names,',',1) as area from company where valid = 1 and area_names != "" ) as t_temp  group by area order by area;
+    </select>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.fundview.modules.model.Company">
+        update company
+        <set>
+            <if test="no != null">
+                no = #{no,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="addr != null">
+                addr = #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="areaNames != null">
+                area_names = #{areaNames,jdbcType=VARCHAR},
+            </if>
+            <if test="areaIds != null">
+                area_ids = #{areaIds,jdbcType=VARCHAR},
+            </if>
+            <if test="regCapital != null">
+                reg_capital = #{regCapital,jdbcType=REAL},
+            </if>
+            <if test="regTime != null">
+                reg_time = #{regTime,jdbcType=VARCHAR},
+            </if>
+            <if test="regType != null">
+                reg_type = #{regType,jdbcType=INTEGER},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                website = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=VARCHAR},
+            </if>
+            <if test="tags != null">
+                tags = #{tags,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeIds != null">
+                trade_ids = #{tradeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNames != null">
+                trade_names = #{tradeNames,jdbcType=VARCHAR},
+            </if>
+            <if test="attentNum != null">
+                attent_num = #{attentNum,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="linkman != null">
+                linkman = #{linkman,jdbcType=VARCHAR},
+            </if>
+            <if test="service != null">
+                service = #{service,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend != null">
+                recommend = #{recommend,jdbcType=TINYINT},
+            </if>
+            <if test="hot != null">
+                hot = #{hot,jdbcType=TINYINT},
+            </if>
+            <if test="latest != null">
+                latest = #{latest,jdbcType=TINYINT},
+            </if>
+            <if test="recommendNum != null">
+                recommend_num = #{recommendNum,jdbcType=INTEGER},
+            </if>
+            <if test="hotNum != null">
+                hot_num = #{hotNum,jdbcType=INTEGER},
+            </if>
+            <if test="latestNum != null">
+                latest_num = #{latestNum,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ltqyType != null">
+                ltqy_type = #{ltqyType,jdbcType=VARCHAR},
+            </if>
+            <if test="employees != null">
+                employees = #{employees,jdbcType=VARCHAR},
+            </if>
+            <if test="mainProducts != null">
+                main_products = #{mainProducts,jdbcType=VARCHAR},
+            </if>
+            <if test="valid != null">
+                valid = #{valid,jdbcType=INTEGER},
+            </if>
+            <if test="tradeChildIds != null">
+                trade_child_ids = #{tradeChildIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeChildNames != null">
+                trade_child_names = #{tradeChildNames,jdbcType=VARCHAR},
+            </if>
+            <if test="recommendTrade != null">
+                recommend_trade = #{recommendTrade,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mark != null">
+                mark = #{mark,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCode != null">
+                org_code = #{orgCode,jdbcType=VARCHAR},
+            </if>
+            <if test="businessLicence != null">
+                business_licence = #{businessLicence,jdbcType=VARCHAR},
+            </if>
+            <if test="compAuth != null">
+                comp_auth = #{compAuth,jdbcType=INTEGER},
+            </if>
+            <if test="choose != null">
+                choose = #{choose,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="telShow != null">
+                tel_show = #{telShow,jdbcType=TINYINT},
+            </if>
+            <if test="rawMateris != null">
+                raw_materis = #{rawMateris,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where account_id = #{accountId,jdbcType=INTEGER}
+    </update>
+
+</mapper>

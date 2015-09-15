@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.fundview.modules.dao.TechRequMapper">
+    <resultMap id="BaseResultMap" type="cn.fundview.modules.model.TechRequ">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="comp_id" property="compId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="intro" property="intro" jdbcType="VARCHAR"/>
+        <result column="trade_ids" property="tradeIds" jdbcType="VARCHAR"/>
+        <result column="trade_names" property="tradeNames" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="recommend" property="recommend" jdbcType="TINYINT"/>
+        <result column="hot" property="hot" jdbcType="TINYINT"/>
+        <result column="latest" property="latest" jdbcType="TINYINT"/>
+        <result column="recommend_num" property="recommendNum" jdbcType="INTEGER"/>
+        <result column="hot_num" property="hotNum" jdbcType="INTEGER"/>
+        <result column="latest_num" property="latestNum" jdbcType="INTEGER"/>
+        <result column="hzfs" property="hzfs" jdbcType="VARCHAR"/>
+        <result column="other_hzfs" property="otherHzfs" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="TINYINT"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="mark" property="mark" jdbcType="VARCHAR"/>
+        <result column="is_delegate" property="isDelegate" jdbcType="TINYINT"/>
+        <result column="is_show" property="isShow" jdbcType="TINYINT"/>
+        <result column="delegate_info" property="delegateInfo" jdbcType="VARCHAR"/>
+        <result column="end_time" property="endTime" jdbcType="VARCHAR"/>
+        <result column="fin_plan" property="finPlan" jdbcType="DOUBLE"/>
+        <result column="ynkt" property="ynkt" jdbcType="TINYINT"/>
+        <result column="requ_hj" property="requHj" jdbcType="VARCHAR"/>
+        <result column="other_requ_hj" property="otherRequHj" jdbcType="VARCHAR"/>
+        <result column="target" property="target" jdbcType="VARCHAR"/>
+        <result column="lim_address" property="limAddress" jdbcType="VARCHAR"/>
+        <result column="low_req" property="lowReq" jdbcType="INTEGER"/>
+        <result column="tech_man" property="techMan" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="delete_mark" property="deleteMark" jdbcType="TINYINT"/>
+        <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP"/>
+        <result column="tags" property="tags" jdbcType="VARCHAR"/>
+        <result column="choose" property="choose" jdbcType="VARCHAR"/>
+        <result column="duty" property="duty" jdbcType="VARCHAR"/>
+        <result column="allmoney" property="allmoney" jdbcType="TINYINT"/>
+        <result column="allmoney_money" property="allmoneyMoney" jdbcType="DOUBLE"/>
+        <result column="develop_money" property="developMoney" jdbcType="DOUBLE"/>
+        <result column="hzfs_intro" property="hzfsIntro" jdbcType="VARCHAR"/>
+        <result column="iaddress" property="iaddress" jdbcType="TINYINT"/>
+        <result column="material_ids" property="materialIds" jdbcType="VARCHAR"/>
+        <result column="material_names" property="materialNames" jdbcType="VARCHAR"/>
+        <result column="achv_innovate" property="achvInnovate" jdbcType="VARCHAR"/>
+        <result column="alone_per" property="alonePer" jdbcType="TINYINT"/>
+        <result column="alone_per_money" property="alonePerMoney" jdbcType="DOUBLE"/>
+        <result column="reject_per" property="rejectPer" jdbcType="TINYINT"/>
+        <result column="reject_per_money" property="rejectPerMoney" jdbcType="DOUBLE"/>
+        <result column="entrust_org" property="entrustOrg" jdbcType="TINYINT"/>
+        <result column="entrust_org_money" property="entrustOrgMoney" jdbcType="DOUBLE"/>
+        <result column="coll_org" property="collOrg" jdbcType="TINYINT"/>
+        <result column="coll_org_money" property="collOrgMoney" jdbcType="DOUBLE"/>
+        <result column="unite_expert_company" property="uniteExpertCompany" jdbcType="TINYINT"/>
+        <result column="scene" property="scene" jdbcType="TINYINT"/>
+        <result column="other_requ" property="otherRequ" jdbcType="VARCHAR"/>
+        <result column="expert_consult" property="expertConsult" jdbcType="TINYINT"/>
+        <result column="expert_consult_intro" property="expertConsultIntro" jdbcType="VARCHAR"/>
+        <result column="serve_money" property="serveMoney" jdbcType="DOUBLE"/>
+        <result column="material_type_ids" property="materialTypeIds" jdbcType="VARCHAR"/>
+        <result column="material_type_names" property="materialTypeNames" jdbcType="VARCHAR"/>
+        <result column="product_ids" property="productIds" jdbcType="VARCHAR"/>
+        <result column="product_names" property="productNames" jdbcType="VARCHAR"/>
+        <result column="prod_type_ids" property="prodTypeIds" jdbcType="VARCHAR"/>
+        <result column="prod_type_names" property="prodTypeNames" jdbcType="VARCHAR"/>
+        <result column="recommend_trade" property="recommendTrade" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="techMap" type="cn.fundview.modules.model.TechRequ">
+    	<id column="id" property="id" jdbcType="INTEGER"/>
+    	<result column="name" property="name" jdbcType="VARCHAR"/>
+    	<result column="tech_man" property="techMan" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+         <result column="valid" property="valid" jdbcType="TINYINT"/>
+         <result column="publish_date" property="publishDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, comp_id, name, intro, trade_ids, trade_names, status, recommend, hot, latest,
+        recommend_num, hot_num, latest_num, hzfs, other_hzfs, valid, update_time, mark, is_delegate,
+        is_show, delegate_info, end_time, fin_plan, ynkt, requ_hj, other_requ_hj, target,
+        lim_address, low_req, tech_man, phone, tel, email, delete_mark, publish_date, tags,
+        choose, duty, allmoney, allmoney_money, develop_money, hzfs_intro, iaddress, material_ids,
+        material_names, achv_innovate, alone_per, alone_per_money, reject_per, reject_per_money,
+        entrust_org, entrust_org_money, coll_org, coll_org_money, unite_expert_company, scene,
+        other_requ, expert_consult, expert_consult_intro, serve_money, material_type_ids,
+        material_type_names, product_ids, product_names, prod_type_ids, prod_type_names,
+        recommend_trade
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from tech_requ
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+     <sql id="tech_item">
+	  	id,name,phone,tech_man,publish_date,valid
+	  </sql>
+	   <select id="get" resultMap="BaseResultMap">
+			select *
+			from tech_requ e 
+			where e.id = #{id,jdbcType=INTEGER}
+		</select>
+	  <select id="findAllList" resultMap="techMap">
+	  		select 
+	  		<include refid="tech_item" />
+			from tech_requ  where delete_mark = 0  order by publish_date desc
+	  </select>
+    
+    
+    
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from tech_requ
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="cn.fundview.modules.model.TechRequ">
+        insert into tech_requ (id, comp_id, name,
+        intro, trade_ids, trade_names,
+        status, recommend, hot,
+        latest, recommend_num, hot_num,
+        latest_num, hzfs, other_hzfs,
+        valid, update_time, mark,
+        is_delegate, is_show, delegate_info,
+        end_time, fin_plan, ynkt,
+        requ_hj, other_requ_hj, target,
+        lim_address, low_req, tech_man,
+        phone, tel, email,
+        delete_mark, publish_date, tags,
+        choose, duty, allmoney,
+        allmoney_money, develop_money, hzfs_intro,
+        iaddress, material_ids, material_names,
+        achv_innovate, alone_per, alone_per_money,
+        reject_per, reject_per_money, entrust_org,
+        entrust_org_money, coll_org, coll_org_money,
+        unite_expert_company, scene, other_requ,
+        expert_consult, expert_consult_intro, serve_money,
+        material_type_ids, material_type_names, product_ids,
+        product_names, prod_type_ids, prod_type_names,
+        recommend_trade)
+        values (#{id,jdbcType=INTEGER}, #{compId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+        #{intro,jdbcType=VARCHAR}, #{tradeIds,jdbcType=VARCHAR}, #{tradeNames,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER}, #{recommend,jdbcType=TINYINT}, #{hot,jdbcType=TINYINT},
+        #{latest,jdbcType=TINYINT}, #{recommendNum,jdbcType=INTEGER}, #{hotNum,jdbcType=INTEGER},
+        #{latestNum,jdbcType=INTEGER}, #{hzfs,jdbcType=VARCHAR}, #{otherHzfs,jdbcType=VARCHAR},
+        #{valid,jdbcType=TINYINT}, #{updateTime,jdbcType=TIMESTAMP}, #{mark,jdbcType=VARCHAR},
+        #{isDelegate,jdbcType=TINYINT}, #{isShow,jdbcType=TINYINT}, #{delegateInfo,jdbcType=VARCHAR},
+        #{endTime,jdbcType=VARCHAR}, #{finPlan,jdbcType=DOUBLE}, #{ynkt,jdbcType=TINYINT},
+        #{requHj,jdbcType=VARCHAR}, #{otherRequHj,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR},
+        #{limAddress,jdbcType=VARCHAR}, #{lowReq,jdbcType=INTEGER}, #{techMan,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{deleteMark,jdbcType=TINYINT}, #{publishDate,jdbcType=TIMESTAMP}, #{tags,jdbcType=VARCHAR},
+        #{choose,jdbcType=VARCHAR}, #{duty,jdbcType=VARCHAR}, #{allmoney,jdbcType=TINYINT},
+        #{allmoneyMoney,jdbcType=DOUBLE}, #{developMoney,jdbcType=DOUBLE}, #{hzfsIntro,jdbcType=VARCHAR},
+        #{iaddress,jdbcType=TINYINT}, #{materialIds,jdbcType=VARCHAR}, #{materialNames,jdbcType=VARCHAR},
+        #{achvInnovate,jdbcType=VARCHAR}, #{alonePer,jdbcType=TINYINT}, #{alonePerMoney,jdbcType=DOUBLE},
+        #{rejectPer,jdbcType=TINYINT}, #{rejectPerMoney,jdbcType=DOUBLE}, #{entrustOrg,jdbcType=TINYINT},
+        #{entrustOrgMoney,jdbcType=DOUBLE}, #{collOrg,jdbcType=TINYINT}, #{collOrgMoney,jdbcType=DOUBLE},
+        #{uniteExpertCompany,jdbcType=TINYINT}, #{scene,jdbcType=TINYINT}, #{otherRequ,jdbcType=VARCHAR},
+        #{expertConsult,jdbcType=TINYINT}, #{expertConsultIntro,jdbcType=VARCHAR}, #{serveMoney,jdbcType=DOUBLE},
+        #{materialTypeIds,jdbcType=VARCHAR}, #{materialTypeNames,jdbcType=VARCHAR}, #{productIds,jdbcType=VARCHAR},
+        #{productNames,jdbcType=VARCHAR}, #{prodTypeIds,jdbcType=VARCHAR}, #{prodTypeNames,jdbcType=VARCHAR},
+        #{recommendTrade,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.fundview.modules.model.TechRequ">
+        insert into tech_requ
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="compId != null">
+                comp_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="intro != null">
+                intro,
+            </if>
+            <if test="tradeIds != null">
+                trade_ids,
+            </if>
+            <if test="tradeNames != null">
+                trade_names,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="recommend != null">
+                recommend,
+            </if>
+            <if test="hot != null">
+                hot,
+            </if>
+            <if test="latest != null">
+                latest,
+            </if>
+            <if test="recommendNum != null">
+                recommend_num,
+            </if>
+            <if test="hotNum != null">
+                hot_num,
+            </if>
+            <if test="latestNum != null">
+                latest_num,
+            </if>
+            <if test="hzfs != null">
+                hzfs,
+            </if>
+            <if test="otherHzfs != null">
+                other_hzfs,
+            </if>
+            <if test="valid != null">
+                valid,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="mark != null">
+                mark,
+            </if>
+            <if test="isDelegate != null">
+                is_delegate,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="delegateInfo != null">
+                delegate_info,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="finPlan != null">
+                fin_plan,
+            </if>
+            <if test="ynkt != null">
+                ynkt,
+            </if>
+            <if test="requHj != null">
+                requ_hj,
+            </if>
+            <if test="otherRequHj != null">
+                other_requ_hj,
+            </if>
+            <if test="target != null">
+                target,
+            </if>
+            <if test="limAddress != null">
+                lim_address,
+            </if>
+            <if test="lowReq != null">
+                low_req,
+            </if>
+            <if test="techMan != null">
+                tech_man,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="deleteMark != null">
+                delete_mark,
+            </if>
+            <if test="publishDate != null">
+                publish_date,
+            </if>
+            <if test="tags != null">
+                tags,
+            </if>
+            <if test="choose != null">
+                choose,
+            </if>
+            <if test="duty != null">
+                duty,
+            </if>
+            <if test="allmoney != null">
+                allmoney,
+            </if>
+            <if test="allmoneyMoney != null">
+                allmoney_money,
+            </if>
+            <if test="developMoney != null">
+                develop_money,
+            </if>
+            <if test="hzfsIntro != null">
+                hzfs_intro,
+            </if>
+            <if test="iaddress != null">
+                iaddress,
+            </if>
+            <if test="materialIds != null">
+                material_ids,
+            </if>
+            <if test="materialNames != null">
+                material_names,
+            </if>
+            <if test="achvInnovate != null">
+                achv_innovate,
+            </if>
+            <if test="alonePer != null">
+                alone_per,
+            </if>
+            <if test="alonePerMoney != null">
+                alone_per_money,
+            </if>
+            <if test="rejectPer != null">
+                reject_per,
+            </if>
+            <if test="rejectPerMoney != null">
+                reject_per_money,
+            </if>
+            <if test="entrustOrg != null">
+                entrust_org,
+            </if>
+            <if test="entrustOrgMoney != null">
+                entrust_org_money,
+            </if>
+            <if test="collOrg != null">
+                coll_org,
+            </if>
+            <if test="collOrgMoney != null">
+                coll_org_money,
+            </if>
+            <if test="uniteExpertCompany != null">
+                unite_expert_company,
+            </if>
+            <if test="scene != null">
+                scene,
+            </if>
+            <if test="otherRequ != null">
+                other_requ,
+            </if>
+            <if test="expertConsult != null">
+                expert_consult,
+            </if>
+            <if test="expertConsultIntro != null">
+                expert_consult_intro,
+            </if>
+            <if test="serveMoney != null">
+                serve_money,
+            </if>
+            <if test="materialTypeIds != null">
+                material_type_ids,
+            </if>
+            <if test="materialTypeNames != null">
+                material_type_names,
+            </if>
+            <if test="productIds != null">
+                product_ids,
+            </if>
+            <if test="productNames != null">
+                product_names,
+            </if>
+            <if test="prodTypeIds != null">
+                prod_type_ids,
+            </if>
+            <if test="prodTypeNames != null">
+                prod_type_names,
+            </if>
+            <if test="recommendTrade != null">
+                recommend_trade,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="compId != null">
+                #{compId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeIds != null">
+                #{tradeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNames != null">
+                #{tradeNames,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="recommend != null">
+                #{recommend,jdbcType=TINYINT},
+            </if>
+            <if test="hot != null">
+                #{hot,jdbcType=TINYINT},
+            </if>
+            <if test="latest != null">
+                #{latest,jdbcType=TINYINT},
+            </if>
+            <if test="recommendNum != null">
+                #{recommendNum,jdbcType=INTEGER},
+            </if>
+            <if test="hotNum != null">
+                #{hotNum,jdbcType=INTEGER},
+            </if>
+            <if test="latestNum != null">
+                #{latestNum,jdbcType=INTEGER},
+            </if>
+            <if test="hzfs != null">
+                #{hzfs,jdbcType=VARCHAR},
+            </if>
+            <if test="otherHzfs != null">
+                #{otherHzfs,jdbcType=VARCHAR},
+            </if>
+            <if test="valid != null">
+                #{valid,jdbcType=TINYINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mark != null">
+                #{mark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelegate != null">
+                #{isDelegate,jdbcType=TINYINT},
+            </if>
+            <if test="isShow != null">
+                #{isShow,jdbcType=TINYINT},
+            </if>
+            <if test="delegateInfo != null">
+                #{delegateInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="finPlan != null">
+                #{finPlan,jdbcType=DOUBLE},
+            </if>
+            <if test="ynkt != null">
+                #{ynkt,jdbcType=TINYINT},
+            </if>
+            <if test="requHj != null">
+                #{requHj,jdbcType=VARCHAR},
+            </if>
+            <if test="otherRequHj != null">
+                #{otherRequHj,jdbcType=VARCHAR},
+            </if>
+            <if test="target != null">
+                #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="limAddress != null">
+                #{limAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="lowReq != null">
+                #{lowReq,jdbcType=INTEGER},
+            </if>
+            <if test="techMan != null">
+                #{techMan,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteMark != null">
+                #{deleteMark,jdbcType=TINYINT},
+            </if>
+            <if test="publishDate != null">
+                #{publishDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tags != null">
+                #{tags,jdbcType=VARCHAR},
+            </if>
+            <if test="choose != null">
+                #{choose,jdbcType=VARCHAR},
+            </if>
+            <if test="duty != null">
+                #{duty,jdbcType=VARCHAR},
+            </if>
+            <if test="allmoney != null">
+                #{allmoney,jdbcType=TINYINT},
+            </if>
+            <if test="allmoneyMoney != null">
+                #{allmoneyMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="developMoney != null">
+                #{developMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="hzfsIntro != null">
+                #{hzfsIntro,jdbcType=VARCHAR},
+            </if>
+            <if test="iaddress != null">
+                #{iaddress,jdbcType=TINYINT},
+            </if>
+            <if test="materialIds != null">
+                #{materialIds,jdbcType=VARCHAR},
+            </if>
+            <if test="materialNames != null">
+                #{materialNames,jdbcType=VARCHAR},
+            </if>
+            <if test="achvInnovate != null">
+                #{achvInnovate,jdbcType=VARCHAR},
+            </if>
+            <if test="alonePer != null">
+                #{alonePer,jdbcType=TINYINT},
+            </if>
+            <if test="alonePerMoney != null">
+                #{alonePerMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="rejectPer != null">
+                #{rejectPer,jdbcType=TINYINT},
+            </if>
+            <if test="rejectPerMoney != null">
+                #{rejectPerMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="entrustOrg != null">
+                #{entrustOrg,jdbcType=TINYINT},
+            </if>
+            <if test="entrustOrgMoney != null">
+                #{entrustOrgMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="collOrg != null">
+                #{collOrg,jdbcType=TINYINT},
+            </if>
+            <if test="collOrgMoney != null">
+                #{collOrgMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="uniteExpertCompany != null">
+                #{uniteExpertCompany,jdbcType=TINYINT},
+            </if>
+            <if test="scene != null">
+                #{scene,jdbcType=TINYINT},
+            </if>
+            <if test="otherRequ != null">
+                #{otherRequ,jdbcType=VARCHAR},
+            </if>
+            <if test="expertConsult != null">
+                #{expertConsult,jdbcType=TINYINT},
+            </if>
+            <if test="expertConsultIntro != null">
+                #{expertConsultIntro,jdbcType=VARCHAR},
+            </if>
+            <if test="serveMoney != null">
+                #{serveMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="materialTypeIds != null">
+                #{materialTypeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="materialTypeNames != null">
+                #{materialTypeNames,jdbcType=VARCHAR},
+            </if>
+            <if test="productIds != null">
+                #{productIds,jdbcType=VARCHAR},
+            </if>
+            <if test="productNames != null">
+                #{productNames,jdbcType=VARCHAR},
+            </if>
+            <if test="prodTypeIds != null">
+                #{prodTypeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="prodTypeNames != null">
+                #{prodTypeNames,jdbcType=VARCHAR},
+            </if>
+            <if test="recommendTrade != null">
+                #{recommendTrade,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="cn.fundview.modules.model.TechRequ">
+        update tech_requ
+        <set>
+            <if test="compId != null">
+                comp_id = #{compId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="intro != null">
+                intro = #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeIds != null">
+                trade_ids = #{tradeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNames != null">
+                trade_names = #{tradeNames,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="recommend != null">
+                recommend = #{recommend,jdbcType=TINYINT},
+            </if>
+            <if test="hot != null">
+                hot = #{hot,jdbcType=TINYINT},
+            </if>
+            <if test="latest != null">
+                latest = #{latest,jdbcType=TINYINT},
+            </if>
+            <if test="recommendNum != null">
+                recommend_num = #{recommendNum,jdbcType=INTEGER},
+            </if>
+            <if test="hotNum != null">
+                hot_num = #{hotNum,jdbcType=INTEGER},
+            </if>
+            <if test="latestNum != null">
+                latest_num = #{latestNum,jdbcType=INTEGER},
+            </if>
+            <if test="hzfs != null">
+                hzfs = #{hzfs,jdbcType=VARCHAR},
+            </if>
+            <if test="otherHzfs != null">
+                other_hzfs = #{otherHzfs,jdbcType=VARCHAR},
+            </if>
+            <if test="valid != null">
+                valid = #{valid,jdbcType=TINYINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mark != null">
+                mark = #{mark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelegate != null">
+                is_delegate = #{isDelegate,jdbcType=TINYINT},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow,jdbcType=TINYINT},
+            </if>
+            <if test="delegateInfo != null">
+                delegate_info = #{delegateInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=VARCHAR},
+            </if>
+            <if test="finPlan != null">
+                fin_plan = #{finPlan,jdbcType=DOUBLE},
+            </if>
+            <if test="ynkt != null">
+                ynkt = #{ynkt,jdbcType=TINYINT},
+            </if>
+            <if test="requHj != null">
+                requ_hj = #{requHj,jdbcType=VARCHAR},
+            </if>
+            <if test="otherRequHj != null">
+                other_requ_hj = #{otherRequHj,jdbcType=VARCHAR},
+            </if>
+            <if test="target != null">
+                target = #{target,jdbcType=VARCHAR},
+            </if>
+            <if test="limAddress != null">
+                lim_address = #{limAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="lowReq != null">
+                low_req = #{lowReq,jdbcType=INTEGER},
+            </if>
+            <if test="techMan != null">
+                tech_man = #{techMan,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="deleteMark != null">
+                delete_mark = #{deleteMark,jdbcType=TINYINT},
+            </if>
+            <if test="publishDate != null">
+                publish_date = #{publishDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tags != null">
+                tags = #{tags,jdbcType=VARCHAR},
+            </if>
+            <if test="choose != null">
+                choose = #{choose,jdbcType=VARCHAR},
+            </if>
+            <if test="duty != null">
+                duty = #{duty,jdbcType=VARCHAR},
+            </if>
+            <if test="allmoney != null">
+                allmoney = #{allmoney,jdbcType=TINYINT},
+            </if>
+            <if test="allmoneyMoney != null">
+                allmoney_money = #{allmoneyMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="developMoney != null">
+                develop_money = #{developMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="hzfsIntro != null">
+                hzfs_intro = #{hzfsIntro,jdbcType=VARCHAR},
+            </if>
+            <if test="iaddress != null">
+                iaddress = #{iaddress,jdbcType=TINYINT},
+            </if>
+            <if test="materialIds != null">
+                material_ids = #{materialIds,jdbcType=VARCHAR},
+            </if>
+            <if test="materialNames != null">
+                material_names = #{materialNames,jdbcType=VARCHAR},
+            </if>
+            <if test="achvInnovate != null">
+                achv_innovate = #{achvInnovate,jdbcType=VARCHAR},
+            </if>
+            <if test="alonePer != null">
+                alone_per = #{alonePer,jdbcType=TINYINT},
+            </if>
+            <if test="alonePerMoney != null">
+                alone_per_money = #{alonePerMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="rejectPer != null">
+                reject_per = #{rejectPer,jdbcType=TINYINT},
+            </if>
+            <if test="rejectPerMoney != null">
+                reject_per_money = #{rejectPerMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="entrustOrg != null">
+                entrust_org = #{entrustOrg,jdbcType=TINYINT},
+            </if>
+            <if test="entrustOrgMoney != null">
+                entrust_org_money = #{entrustOrgMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="collOrg != null">
+                coll_org = #{collOrg,jdbcType=TINYINT},
+            </if>
+            <if test="collOrgMoney != null">
+                coll_org_money = #{collOrgMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="uniteExpertCompany != null">
+                unite_expert_company = #{uniteExpertCompany,jdbcType=TINYINT},
+            </if>
+            <if test="scene != null">
+                scene = #{scene,jdbcType=TINYINT},
+            </if>
+            <if test="otherRequ != null">
+                other_requ = #{otherRequ,jdbcType=VARCHAR},
+            </if>
+            <if test="expertConsult != null">
+                expert_consult = #{expertConsult,jdbcType=TINYINT},
+            </if>
+            <if test="expertConsultIntro != null">
+                expert_consult_intro = #{expertConsultIntro,jdbcType=VARCHAR},
+            </if>
+            <if test="serveMoney != null">
+                serve_money = #{serveMoney,jdbcType=DOUBLE},
+            </if>
+            <if test="materialTypeIds != null">
+                material_type_ids = #{materialTypeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="materialTypeNames != null">
+                material_type_names = #{materialTypeNames,jdbcType=VARCHAR},
+            </if>
+            <if test="productIds != null">
+                product_ids = #{productIds,jdbcType=VARCHAR},
+            </if>
+            <if test="productNames != null">
+                product_names = #{productNames,jdbcType=VARCHAR},
+            </if>
+            <if test="prodTypeIds != null">
+                prod_type_ids = #{prodTypeIds,jdbcType=VARCHAR},
+            </if>
+            <if test="prodTypeNames != null">
+                prod_type_names = #{prodTypeNames,jdbcType=VARCHAR},
+            </if>
+            <if test="recommendTrade != null">
+                recommend_trade = #{recommendTrade,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.fundview.modules.model.TechRequ">
+        update tech_requ
+        set comp_id = #{compId,jdbcType=INTEGER},
+        name = #{name,jdbcType=VARCHAR},
+        intro = #{intro,jdbcType=VARCHAR},
+        trade_ids = #{tradeIds,jdbcType=VARCHAR},
+        trade_names = #{tradeNames,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
+        recommend = #{recommend,jdbcType=TINYINT},
+        hot = #{hot,jdbcType=TINYINT},
+        latest = #{latest,jdbcType=TINYINT},
+        recommend_num = #{recommendNum,jdbcType=INTEGER},
+        hot_num = #{hotNum,jdbcType=INTEGER},
+        latest_num = #{latestNum,jdbcType=INTEGER},
+        hzfs = #{hzfs,jdbcType=VARCHAR},
+        other_hzfs = #{otherHzfs,jdbcType=VARCHAR},
+        valid = #{valid,jdbcType=TINYINT},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        mark = #{mark,jdbcType=VARCHAR},
+        is_delegate = #{isDelegate,jdbcType=TINYINT},
+        is_show = #{isShow,jdbcType=TINYINT},
+        delegate_info = #{delegateInfo,jdbcType=VARCHAR},
+        end_time = #{endTime,jdbcType=VARCHAR},
+        fin_plan = #{finPlan,jdbcType=DOUBLE},
+        ynkt = #{ynkt,jdbcType=TINYINT},
+        requ_hj = #{requHj,jdbcType=VARCHAR},
+        other_requ_hj = #{otherRequHj,jdbcType=VARCHAR},
+        target = #{target,jdbcType=VARCHAR},
+        lim_address = #{limAddress,jdbcType=VARCHAR},
+        low_req = #{lowReq,jdbcType=INTEGER},
+        tech_man = #{techMan,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        tel = #{tel,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        delete_mark = #{deleteMark,jdbcType=TINYINT},
+        publish_date = #{publishDate,jdbcType=TIMESTAMP},
+        tags = #{tags,jdbcType=VARCHAR},
+        choose = #{choose,jdbcType=VARCHAR},
+        duty = #{duty,jdbcType=VARCHAR},
+        allmoney = #{allmoney,jdbcType=TINYINT},
+        allmoney_money = #{allmoneyMoney,jdbcType=DOUBLE},
+        develop_money = #{developMoney,jdbcType=DOUBLE},
+        hzfs_intro = #{hzfsIntro,jdbcType=VARCHAR},
+        iaddress = #{iaddress,jdbcType=TINYINT},
+        material_ids = #{materialIds,jdbcType=VARCHAR},
+        material_names = #{materialNames,jdbcType=VARCHAR},
+        achv_innovate = #{achvInnovate,jdbcType=VARCHAR},
+        alone_per = #{alonePer,jdbcType=TINYINT},
+        alone_per_money = #{alonePerMoney,jdbcType=DOUBLE},
+        reject_per = #{rejectPer,jdbcType=TINYINT},
+        reject_per_money = #{rejectPerMoney,jdbcType=DOUBLE},
+        entrust_org = #{entrustOrg,jdbcType=TINYINT},
+        entrust_org_money = #{entrustOrgMoney,jdbcType=DOUBLE},
+        coll_org = #{collOrg,jdbcType=TINYINT},
+        coll_org_money = #{collOrgMoney,jdbcType=DOUBLE},
+        unite_expert_company = #{uniteExpertCompany,jdbcType=TINYINT},
+        scene = #{scene,jdbcType=TINYINT},
+        other_requ = #{otherRequ,jdbcType=VARCHAR},
+        expert_consult = #{expertConsult,jdbcType=TINYINT},
+        expert_consult_intro = #{expertConsultIntro,jdbcType=VARCHAR},
+        serve_money = #{serveMoney,jdbcType=DOUBLE},
+        material_type_ids = #{materialTypeIds,jdbcType=VARCHAR},
+        material_type_names = #{materialTypeNames,jdbcType=VARCHAR},
+        product_ids = #{productIds,jdbcType=VARCHAR},
+        product_names = #{productNames,jdbcType=VARCHAR},
+        prod_type_ids = #{prodTypeIds,jdbcType=VARCHAR},
+        prod_type_names = #{prodTypeNames,jdbcType=VARCHAR},
+        recommend_trade = #{recommendTrade,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
